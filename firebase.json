@@ -1,0 +1,25 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "withmarket-76143",
+          "appId": "1:633575087405:android:d3345149d4aaed4dd447a4",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "withmarket-76143",
+          "configurations": {
+            "android": "1:633575087405:android:d3345149d4aaed4dd447a4",
+            "ios": "1:633575087405:ios:fe0dff6d2752bec0d447a4",
+            "macos": "1:633575087405:ios:fe0dff6d2752bec0d447a4",
+            "web": "1:633575087405:web:9cb5fdab19185346d447a4",
+            "windows": "1:633575087405:web:c5e7b35bf938982bd447a4"
+          }
+        }
+      }
+    }
+  }
+}
