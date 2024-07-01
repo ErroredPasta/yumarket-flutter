@@ -21,10 +21,12 @@ class YuMarketApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = MaterialTheme(Theme.of(context).textTheme);
 
-    return MaterialApp.router(
-      theme: theme.light(),
-      darkTheme: theme.dark(),
-      routerConfig: _goRouter,
+    return SafeArea(
+      child: MaterialApp.router(
+        theme: theme.light(),
+        darkTheme: theme.dark(),
+        routerConfig: _goRouter,
+      ),
     );
   }
 }
