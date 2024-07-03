@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart' hide Order;
+import 'package:yumarket_flutter/domain/model/order_state.dart';
 import 'package:yumarket_flutter/domain/repository/order_repository.dart';
 import 'package:yumarket_flutter/ui/screen/bloc/base_bloc.dart';
 import 'package:yumarket_flutter/ui/screen/bloc/base_event.dart';
@@ -23,6 +24,27 @@ class OrderBloc extends BaseBloc<List<Order>> {
           add(const LoadingDone());
           add(ExceptionOccurred(error as Exception));
         },
+      ),
+    );
+
+    on<AcceptOrder>(
+      (event, emit) => _repository.updateOrder(
+        event.storeId,
+        event.order.copyWith(orderState: OrderState.accepted),
+      ),
+    );
+
+    on<RejectOrder>(
+      (event, emit) => _repository.updateOrder(
+        event.storeId,
+        event.order.copyWith(orderState: OrderState.rejected),
+      ),
+    );
+
+    on<DoneOrder>(
+      (event, emit) => _repository.updateOrder(
+        event.storeId,
+        event.order.copyWith(orderState: OrderState.done),
       ),
     );
   }

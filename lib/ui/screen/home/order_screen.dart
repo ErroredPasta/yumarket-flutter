@@ -16,8 +16,9 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = GetIt.I.get<OrderBloc>();
+    const storeId = 'cc898844-8f2f-451e-bccf-2e84cb195c46';
 
-    bloc.add(const GetOrders('cc898844-8f2f-451e-bccf-2e84cb195c46'));
+    bloc.add(const GetOrders(storeId));
 
     return DefaultTabController(
       length: OrderState.values.length,
@@ -52,11 +53,17 @@ class OrderScreen extends StatelessWidget {
             if (state.data != null) {
               return TabBarView(children: [
                 for (final orderState in OrderState.values)
-                  OrderList(state.data!
-                      .where(
-                        (order) => order.orderState == orderState,
-                      )
-                      .toList())
+                  OrderList(
+                    state.data!
+                        .where((order) => order.orderState == orderState)
+                        .toList(),
+                    onAcceptClick: (order) =>
+                        bloc.add(AcceptOrder(storeId, order)),
+                    onRejectClick: (order) =>
+                        bloc.add(RejectOrder(storeId, order)),
+                    onDeliveryDoneClick: (order) =>
+                        bloc.add(DoneOrder(storeId, order)),
+                  )
               ]);
             }
 

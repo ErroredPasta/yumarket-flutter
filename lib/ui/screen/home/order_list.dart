@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:yumarket_flutter/domain/model/delivery_type.dart';
+import 'package:yumarket_flutter/domain/model/order_state.dart';
 import 'package:yumarket_flutter/ui/screen/home/order_item_list.dart';
 
 import '../../../domain/model/order.dart';
 
 class OrderList extends StatelessWidget {
   final List<Order> orders;
+  final Function(Order order) onAcceptClick;
+  final Function(Order order) onRejectClick;
+  final Function(Order order) onDeliveryDoneClick;
 
-  const OrderList(this.orders, {super.key});
+  const OrderList(
+    this.orders, {
+    super.key,
+    required this.onAcceptClick,
+    required this.onRejectClick,
+    required this.onDeliveryDoneClick,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +25,9 @@ class OrderList extends StatelessWidget {
       itemBuilder: (context, index) => OrderListItem(
         orders[index],
         key: ValueKey(orders[index].id),
+        onAcceptClick: onAcceptClick,
+        onRejectClick: onRejectClick,
+        onDeliveryDoneClick: onDeliveryDoneClick,
       ),
       itemCount: orders.length,
     );
@@ -23,8 +36,17 @@ class OrderList extends StatelessWidget {
 
 class OrderListItem extends StatelessWidget {
   final Order order;
+  final Function(Order order) onAcceptClick;
+  final Function(Order order) onRejectClick;
+  final Function(Order order) onDeliveryDoneClick;
 
-  const OrderListItem(this.order, {super.key});
+  const OrderListItem(
+    this.order, {
+    super.key,
+    required this.onAcceptClick,
+    required this.onRejectClick,
+    required this.onDeliveryDoneClick,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +69,41 @@ class OrderListItem extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onErrorContainer,
                   ),
             ),
-          )
+          ),
+          const SizedBox(height: 16),
+          if (order.orderState == OrderState.pending)
+            Row(
+              children: [
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () => onAcceptClick(order),
+                    style: FilledButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary),
+                    child: const Text('주문 접수'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: () => onRejectClick(order),
+                    style: FilledButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.outline),
+                    child: const Text('주문 거절'),
+                  ),
+                )
+              ],
+            ),
+          if (order.orderState == OrderState.accepted)
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: () => onDeliveryDoneClick(order),
+                style: FilledButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.secondary),
+                child: const Text('배달 완료'),
+              ),
+            )
         ],
       ),
     );

@@ -25,4 +25,10 @@ class OrderRepositoryImpl implements OrderRepository {
       },
     );
   }
+
+  @override
+  Future<void> updateOrder(String storeId, Order order) async {
+    final ref = FirebaseDatabase.instance.ref('orders/$storeId/${order.id}');
+    await ref.update(order.toJson()..remove('orderItemDtos'));
+  }
 }
