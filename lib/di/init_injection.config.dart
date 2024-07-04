@@ -14,7 +14,7 @@ import 'package:yumarket_flutter/data/repository/order_repository_impl.dart'
     as _i4;
 import 'package:yumarket_flutter/domain/repository/order_repository.dart'
     as _i3;
-import 'package:yumarket_flutter/ui/screen/home/order_bloc.dart' as _i5;
+import 'package:yumarket_flutter/ui/screen/order/order_bloc.dart' as _i5;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
