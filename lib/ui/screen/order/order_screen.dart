@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:yumarket_flutter/domain/model/order_state.dart';
 import 'package:yumarket_flutter/ui/screen/bloc/base_event.dart';
 import 'package:yumarket_flutter/ui/screen/bloc/ui_state.dart';
+import 'package:yumarket_flutter/ui/screen/component/main_screen_bottom_navigation.dart';
 import 'package:yumarket_flutter/ui/screen/order/order_bloc.dart';
 import 'package:yumarket_flutter/ui/screen/order/order_event.dart';
 import 'package:yumarket_flutter/ui/screen/order/order_list.dart';
@@ -30,6 +31,7 @@ class OrderScreen extends StatelessWidget {
               )
               .toList(),
         ),
+        bottomNavigationBar: const MainScreenBottomNavigation(currentIndex: 0),
         body: BlocConsumer<OrderBloc, UiState<List<Order>>>(
           bloc: bloc,
           listenWhen: (previous, current) =>
