@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/model/order_item.dart';
+import '../domain/model/order_item.dart';
 
 class OrderItemList extends StatelessWidget {
   final List<OrderItem> orderItems;

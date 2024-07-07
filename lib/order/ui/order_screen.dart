@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:yumarket_flutter/domain/model/order_state.dart';
-import 'package:yumarket_flutter/ui/screen/bloc/base_event.dart';
-import 'package:yumarket_flutter/ui/screen/bloc/ui_state.dart';
-import 'package:yumarket_flutter/ui/screen/component/main_screen_bottom_navigation.dart';
-import 'package:yumarket_flutter/ui/screen/order/order_bloc.dart';
-import 'package:yumarket_flutter/ui/screen/order/order_event.dart';
-import 'package:yumarket_flutter/ui/screen/order/order_list.dart';
+import 'package:yumarket_flutter/core/ui/bloc/ui_state.dart';
+import 'package:yumarket_flutter/core/ui/component/main_screen_bottom_navigation.dart';
+import 'package:yumarket_flutter/order/ui/order_bloc.dart';
 
-import '../../../domain/model/order.dart';
+import '../../core/ui/bloc/base_event.dart';
+import '../domain/model/order.dart';
+import '../domain/model/order_state.dart';
+import 'order_event.dart';
+import 'order_list.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});

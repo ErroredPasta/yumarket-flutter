@@ -1,6 +1,6 @@
-import 'package:yumarket_flutter/ui/screen/bloc/base_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yumarket_flutter/ui/screen/bloc/ui_state.dart';
+import 'package:yumarket_flutter/core/ui/bloc/base_event.dart';
+import 'package:yumarket_flutter/core/ui/bloc/ui_state.dart';
 
 abstract class BaseBloc<Data> extends Bloc<BaseEvent, UiState<Data>> {
   BaseBloc(super.initialState) {

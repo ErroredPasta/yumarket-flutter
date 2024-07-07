@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:yumarket_flutter/domain/model/delivery_type.dart';
-import 'package:yumarket_flutter/domain/model/order_state.dart';
-import 'package:yumarket_flutter/ui/screen/order/order_item_list.dart';
+import 'package:yumarket_flutter/order/domain/model/delivery_type.dart';
 
-import '../../../domain/model/order.dart';
+import '../domain/model/order.dart';
+import '../domain/model/order_state.dart';
+import 'order_item_list.dart';
 
 class OrderList extends StatelessWidget {
   final List<Order> orders;

@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:yumarket_flutter/data/util/realtime_database_converter.dart';
-import 'package:yumarket_flutter/domain/repository/order_repository.dart';
+import 'package:yumarket_flutter/core/data/util/realtime_database_converter.dart';
+import 'package:yumarket_flutter/order/domain/repository/order_repository.dart';
 import 'package:injectable/injectable.dart' hide Order;
 
 import '../../domain/model/order.dart';

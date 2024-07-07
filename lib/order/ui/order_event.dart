@@ -1,6 +1,6 @@
-import 'package:yumarket_flutter/ui/screen/bloc/base_event.dart';
 
-import '../../../domain/model/order.dart';
+import '../../../core/ui/bloc/base_event.dart';
+import '../domain/model/order.dart';
 
 abstract class OrderEvent extends BaseEvent {
   const OrderEvent();

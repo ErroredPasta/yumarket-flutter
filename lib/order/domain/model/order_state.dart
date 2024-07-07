@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:yumarket_flutter/domain/util/case_converter.dart';
+import 'package:yumarket_flutter/core/util/case_converter.dart';
 
 enum OrderState { pending, accepted, done, rejected }
 
