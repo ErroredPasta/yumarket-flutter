@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yumarket_flutter/di/init_injection.dart';
 import 'package:yumarket_flutter/firebase_options.dart';
 import 'package:yumarket_flutter/core/ui/theme/theme.dart';
+import 'package:yumarket_flutter/item_manage/ui/item_manage_screen.dart';
 
 import 'order/ui/order_screen.dart';
 
@@ -38,6 +39,10 @@ final _goRouter = GoRouter(
     GoRoute(
       path: '/orders',
       builder: (context, state) => const OrderScreen(),
-    )
+    ),
+    GoRoute(
+      path: '/items',
+      builder: (context, state) => const ItemManageScreen(),
+    ),
   ],
 );
