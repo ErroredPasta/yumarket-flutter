@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:yumarket_flutter/core/ui/component/main_screen_bottom_navigation.dart';
 import 'package:yumarket_flutter/item_manage/domain/model/item.dart';
-import 'package:yumarket_flutter/item_manage/ui/item_list.dart';
-import 'package:yumarket_flutter/item_manage/ui/item_manage_bloc.dart';
-
-import '../../core/ui/bloc/base_event.dart';
-import '../../core/ui/bloc/ui_state.dart';
+import 'package:yumarket_flutter/item_manage/ui/item_list/item_list.dart';
+import '../../../core/ui/bloc/base_event.dart';
+import '../../../core/ui/bloc/ui_state.dart';
+import 'item_manage_bloc.dart';
 import 'item_manage_event.dart';
 
 const available = '판매중';
