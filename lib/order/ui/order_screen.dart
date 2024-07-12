@@ -24,12 +24,15 @@ class OrderScreen extends StatelessWidget {
     return DefaultTabController(
       length: OrderState.values.length,
       child: Scaffold(
-        appBar: TabBar(
-          tabs: OrderState.values
-              .map(
-                (orderState) => Tab(text: _orderStateToString(orderState)),
-              )
-              .toList(),
+        appBar: AppBar(
+          title: const Text('주문 목록'),
+          bottom: TabBar(
+            tabs: OrderState.values
+                .map(
+                  (orderState) => Tab(text: _orderStateToString(orderState)),
+                )
+                .toList(),
+          ),
         ),
         bottomNavigationBar: const MainScreenBottomNavigation(currentIndex: 0),
         body: BlocConsumer<OrderBloc, UiState<List<Order>>>(
