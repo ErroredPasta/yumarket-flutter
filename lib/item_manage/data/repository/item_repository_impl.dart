@@ -24,4 +24,13 @@ class ItemRepositoryImpl implements ItemRepository {
       },
     );
   }
+
+  @override
+  Future<void> addItem(String storeId, Item item) async {
+    final ref = FirebaseDatabase.instance.ref('marketItems/$storeId');
+    final items = await ref.get();
+    final newItemId = ((items.value as List).last['id'] as int) + 1;
+
+    await ref.child((newItemId).toString()).set(item.copyWith(id: newItemId).toJson());
+  }
 }

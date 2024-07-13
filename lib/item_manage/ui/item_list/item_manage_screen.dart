@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yumarket_flutter/core/ui/component/main_screen_bottom_navigation.dart';
 import 'package:yumarket_flutter/item_manage/domain/model/item.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_list/item_list.dart';
@@ -70,7 +71,7 @@ class ItemManageScreen extends StatelessWidget {
           },
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () { context.push('/items/add'); },
           child: const Icon(Icons.add),
         ),
       ),
