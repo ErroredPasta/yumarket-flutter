@@ -6,6 +6,8 @@ import 'package:yumarket_flutter/core/ui/bloc/ui_state.dart';
 import 'package:yumarket_flutter/item_manage/domain/model/item.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_bloc.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_event.dart';
+import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_state.dart';
+import 'package:yumarket_flutter/item_manage/ui/item_add/option_group_list.dart';
 
 import '../../../core/ui/bloc/base_event.dart';
 
@@ -35,109 +37,140 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocConsumer<ItemAddBloc, UiState<bool>>(
+        child: BlocConsumer<ItemAddBloc, UiState<ItemAddState>>(
           bloc: bloc,
           builder: (context, state) {
-            final bool available = state.data!;
+            final bool available = state.data!.available;
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormField(
-                  controller: _itemNameController,
-                  decoration: const InputDecoration(
-                    labelText: '상품명',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _originalPriceController,
-                  decoration: const InputDecoration(
-                    labelText: '상품 원가',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _discountedPriceController,
-                  decoration: const InputDecoration(
-                    labelText: '상품 할인가',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _stockController,
-                  decoration: const InputDecoration(
-                    labelText: '재고 수량',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                InkWell(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Checkbox(
-                          value: available,
-                          onChanged: (value) {
-                            bloc.add(const ToggleAvailable());
-                          },
-                        ),
-                        const Text('판매중')
-                      ],
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    controller: _itemNameController,
+                    decoration: const InputDecoration(
+                      labelText: '상품명',
+                      border: OutlineInputBorder(),
                     ),
                   ),
-                  onTap: () {
-                    bloc.add(const ToggleAvailable());
-                  },
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: '상품 설명',
-                    border: OutlineInputBorder(),
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _originalPriceController,
+                    decoration: const InputDecoration(
+                      labelText: '상품 원가',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: () {
-                      try {
-                        bloc.add(AddItem(storeId, createItem(available)));
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _discountedPriceController,
+                    decoration: const InputDecoration(
+                      labelText: '상품 할인가',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _stockController,
+                    decoration: const InputDecoration(
+                      labelText: '재고 수량',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  InkWell(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Checkbox(
+                            value: available,
+                            onChanged: (value) {
+                              bloc.add(const ToggleAvailable());
+                            },
+                          ),
+                          const Text('판매중')
+                        ],
+                      ),
+                    ),
+                    onTap: () {
+                      bloc.add(const ToggleAvailable());
+                    },
+                  ),
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _descriptionController,
+                    decoration: const InputDecoration(
+                      labelText: '상품 설명',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  OptionGroupList(
+                    state.data!.optionGroups,
+                    onAddOptionClick: (optionGroup) {
+                      bloc.add(AddOption(optionGroup));
+                    },
+                    onDeleteOptionGroupClick: (optionGroup) {
+                      bloc.add(DeleteOptionGroup(optionGroup));
+                    },
+                  ),
+                  const SizedBox(height: 16.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
+                        bloc.add(const AddOptionGroup());
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                            color: Theme.of(context).colorScheme.secondary),
+                        foregroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                      ),
+                      label: const Text('옵션 그룹 추가하기'),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () {
+                        try {
+                          bloc.add(AddItem(storeId, createItem(state.data!)));
+                          context.pop();
+                        } on Exception catch (exception) {
+                          bloc.add(ExceptionOccurred(exception));
+                        }
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
+                      ),
+                      child: const Text('추가'),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () {
                         context.pop();
-                      } on Exception catch (exception) {
-                        bloc.add(ExceptionOccurred(exception));
-                      }
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onSurface,
+                      ),
+                      child: const Text('취소'),
                     ),
-                    child: const Text('추가'),
                   ),
-                ),
-                const SizedBox(height: 16.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.surface,
-                      foregroundColor: Theme.of(context).colorScheme.onSurface,
-                    ),
-                    child: const Text('취소'),
-                  ),
-                ),
-              ],
+                ],
+              ),
             );
           },
           listenWhen: (previous, current) =>
@@ -158,7 +191,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
     );
   }
 
-  Item createItem(bool available) {
+  Item createItem(ItemAddState state) {
     final price = int.tryParse(_originalPriceController.text);
     final discountedPrice = int.tryParse(_discountedPriceController.text);
     final stock = int.tryParse(_stockController.text);
@@ -174,7 +207,8 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
       stock: stock,
       price: price,
       discountedPrice: discountedPrice,
-      available: available,
+      available: state.available,
+      optionGroups: tempOptionGroupsToOptionGroups(state.optionGroups)
     );
   }
 

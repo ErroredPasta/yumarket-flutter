@@ -28,6 +28,7 @@ mixin _$Item {
   int get discountedPrice => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
   bool get available => throw _privateConstructorUsedError;
+  List<OptionGroup> get optionGroups => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $ItemCopyWith<$Res> {
       int price,
       int discountedPrice,
       String? imageUrl,
-      bool available});
+      bool available,
+      List<OptionGroup> optionGroups});
 }
 
 /// @nodoc
@@ -71,6 +73,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
     Object? discountedPrice = null,
     Object? imageUrl = freezed,
     Object? available = null,
+    Object? optionGroups = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -105,6 +108,10 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
               as bool,
+      optionGroups: null == optionGroups
+          ? _value.optionGroups
+          : optionGroups // ignore: cast_nullable_to_non_nullable
+              as List<OptionGroup>,
     ) as $Val);
   }
 }
@@ -124,7 +131,8 @@ abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
       int price,
       int discountedPrice,
       String? imageUrl,
-      bool available});
+      bool available,
+      List<OptionGroup> optionGroups});
 }
 
 /// @nodoc
@@ -145,6 +153,7 @@ class __$$ItemImplCopyWithImpl<$Res>
     Object? discountedPrice = null,
     Object? imageUrl = freezed,
     Object? available = null,
+    Object? optionGroups = null,
   }) {
     return _then(_$ItemImpl(
       id: null == id
@@ -179,6 +188,10 @@ class __$$ItemImplCopyWithImpl<$Res>
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
               as bool,
+      optionGroups: null == optionGroups
+          ? _value._optionGroups
+          : optionGroups // ignore: cast_nullable_to_non_nullable
+              as List<OptionGroup>,
     ));
   }
 }
@@ -194,7 +207,9 @@ class _$ItemImpl implements _Item {
       required this.price,
       required this.discountedPrice,
       this.imageUrl = null,
-      required this.available});
+      required this.available,
+      required final List<OptionGroup> optionGroups})
+      : _optionGroups = optionGroups;
 
   factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemImplFromJson(json);
@@ -216,10 +231,17 @@ class _$ItemImpl implements _Item {
   final String? imageUrl;
   @override
   final bool available;
+  final List<OptionGroup> _optionGroups;
+  @override
+  List<OptionGroup> get optionGroups {
+    if (_optionGroups is EqualUnmodifiableListView) return _optionGroups;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_optionGroups);
+  }
 
   @override
   String toString() {
-    return 'Item(id: $id, name: $name, description: $description, stock: $stock, price: $price, discountedPrice: $discountedPrice, imageUrl: $imageUrl, available: $available)';
+    return 'Item(id: $id, name: $name, description: $description, stock: $stock, price: $price, discountedPrice: $discountedPrice, imageUrl: $imageUrl, available: $available, optionGroups: $optionGroups)';
   }
 
   @override
@@ -238,13 +260,24 @@ class _$ItemImpl implements _Item {
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.available, available) ||
-                other.available == available));
+                other.available == available) &&
+            const DeepCollectionEquality()
+                .equals(other._optionGroups, _optionGroups));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, description, stock,
-      price, discountedPrice, imageUrl, available);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      description,
+      stock,
+      price,
+      discountedPrice,
+      imageUrl,
+      available,
+      const DeepCollectionEquality().hash(_optionGroups));
 
   @JsonKey(ignore: true)
   @override
@@ -269,7 +302,8 @@ abstract class _Item implements Item {
       required final int price,
       required final int discountedPrice,
       final String? imageUrl,
-      required final bool available}) = _$ItemImpl;
+      required final bool available,
+      required final List<OptionGroup> optionGroups}) = _$ItemImpl;
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 
@@ -289,6 +323,8 @@ abstract class _Item implements Item {
   String? get imageUrl;
   @override
   bool get available;
+  @override
+  List<OptionGroup> get optionGroups;
   @override
   @JsonKey(ignore: true)
   _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
