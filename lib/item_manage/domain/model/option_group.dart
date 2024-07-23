@@ -7,6 +7,8 @@ part 'option_group.g.dart';
 
 @freezed
 class OptionGroup with _$OptionGroup {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
   const factory OptionGroup({
     required int id,
     required String name,

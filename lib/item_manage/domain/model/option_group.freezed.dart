@@ -141,7 +141,8 @@ class __$$OptionGroupImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$OptionGroupImpl implements _OptionGroup {
   const _$OptionGroupImpl(
       {required this.id,

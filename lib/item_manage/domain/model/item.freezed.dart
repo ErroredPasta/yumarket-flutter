@@ -197,7 +197,8 @@ class __$$ItemImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$ItemImpl implements _Item {
   const _$ItemImpl(
       {required this.id,
@@ -208,7 +209,7 @@ class _$ItemImpl implements _Item {
       required this.discountedPrice,
       this.imageUrl = null,
       required this.available,
-      required final List<OptionGroup> optionGroups})
+      final List<OptionGroup> optionGroups = const <OptionGroup>[]})
       : _optionGroups = optionGroups;
 
   factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
@@ -233,6 +234,7 @@ class _$ItemImpl implements _Item {
   final bool available;
   final List<OptionGroup> _optionGroups;
   @override
+  @JsonKey()
   List<OptionGroup> get optionGroups {
     if (_optionGroups is EqualUnmodifiableListView) return _optionGroups;
     // ignore: implicit_dynamic_type
@@ -303,7 +305,7 @@ abstract class _Item implements Item {
       required final int discountedPrice,
       final String? imageUrl,
       required final bool available,
-      required final List<OptionGroup> optionGroups}) = _$ItemImpl;
+      final List<OptionGroup> optionGroups}) = _$ItemImpl;
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 

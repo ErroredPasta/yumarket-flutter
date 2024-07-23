@@ -22,8 +22,8 @@ Map<String, dynamic> _$$OptionGroupImplToJson(_$OptionGroupImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'options': instance.options,
-      'selectRange': instance.selectRange,
+      'options': instance.options.map((e) => e.toJson()).toList(),
+      'selectRange': instance.selectRange.toJson(),
     };
 
 _$IntRangeImpl _$$IntRangeImplFromJson(Map<String, dynamic> json) =>

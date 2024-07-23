@@ -7,6 +7,8 @@ part 'item.g.dart';
 
 @freezed
 class Item with _$Item {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
   const factory Item({
     required int id,
     required String name,
@@ -16,7 +18,7 @@ class Item with _$Item {
     required int discountedPrice,
     @Default(null) String? imageUrl,
     required bool available,
-    required List<OptionGroup> optionGroups,
+    @Default(<OptionGroup>[]) List<OptionGroup> optionGroups,
   }) = _Item;
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
