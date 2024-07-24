@@ -57,6 +57,36 @@ class OptionGroupListItem extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8.0),
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  onChanged: (value) {
+                    _optionGroup.selectRange.start = int.parse(value);
+                  },
+                  decoration: const InputDecoration(
+                    labelText: '최소 선택수',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8.0),
+              const Text('~'),
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: TextFormField(
+                  onChanged: (value) {
+                    _optionGroup.selectRange.end = int.parse(value);
+                  },
+                  decoration: const InputDecoration(
+                    labelText: '최대 선택수',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8.0),
           OptionList(_optionGroup.options),
           const SizedBox(height: 8.0),
           OutlinedButton.icon(
