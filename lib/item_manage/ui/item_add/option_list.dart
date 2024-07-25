@@ -4,21 +4,31 @@ import 'item_add_state.dart';
 
 class OptionList extends StatelessWidget {
   final List<TempOption> _options;
+  final void Function(TempOption option) onDeleteOptionClick;
 
-  const OptionList(this._options, {super.key});
+  const OptionList(this._options,
+      {required this.onDeleteOptionClick, super.key,});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [for (final option in _options) OptionListItem(option)],
+      children: [
+        for (final option in _options) OptionListItem(
+          option, onDeleteOptionClick: onDeleteOptionClick,
+        )
+      ],
     );
   }
 }
 
 class OptionListItem extends StatelessWidget {
   final TempOption _option;
+  final void Function(TempOption option) onDeleteOptionClick;
 
-  const OptionListItem(this._option, {super.key});
+  const OptionListItem(this._option, {
+    required this.onDeleteOptionClick,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +61,9 @@ class OptionListItem extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8.0),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.delete))
+          IconButton(onPressed: () {
+            onDeleteOptionClick(_option);
+          }, icon: const Icon(Icons.delete))
         ],
       ),
     );

@@ -6,11 +6,14 @@ class OptionGroupList extends StatelessWidget {
   final List<TempOptionGroup> _optionGroups;
   final void Function(TempOptionGroup optionGroup) onAddOptionClick;
   final void Function(TempOptionGroup optionGroup) onDeleteOptionGroupClick;
+  final void Function(TempOptionGroup optionGroup, TempOption option)
+      onDeleteOptionClick;
 
   const OptionGroupList(
     this._optionGroups, {
     required this.onAddOptionClick,
     required this.onDeleteOptionGroupClick,
+    required this.onDeleteOptionClick,
     super.key,
   });
 
@@ -23,6 +26,7 @@ class OptionGroupList extends StatelessWidget {
             optionGroup,
             onAddOptionClick: onAddOptionClick,
             onDeleteOptionGroupClick: onDeleteOptionGroupClick,
+            onDeleteOptionClick: onDeleteOptionClick,
           )
       ],
     );
@@ -33,11 +37,14 @@ class OptionGroupListItem extends StatelessWidget {
   final TempOptionGroup _optionGroup;
   final void Function(TempOptionGroup optionGroup) onAddOptionClick;
   final void Function(TempOptionGroup optionGroup) onDeleteOptionGroupClick;
+  final void Function(TempOptionGroup optionGroup, TempOption option)
+      onDeleteOptionClick;
 
   const OptionGroupListItem(
     this._optionGroup, {
     required this.onAddOptionClick,
     required this.onDeleteOptionGroupClick,
+    required this.onDeleteOptionClick,
     super.key,
   });
 
@@ -87,7 +94,10 @@ class OptionGroupListItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8.0),
-          OptionList(_optionGroup.options),
+          OptionList(
+            _optionGroup.options,
+            onDeleteOptionClick: (option) { onDeleteOptionClick(_optionGroup, option); },
+          ),
           const SizedBox(height: 8.0),
           OutlinedButton.icon(
             onPressed: () {

@@ -116,6 +116,9 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                     onDeleteOptionGroupClick: (optionGroup) {
                       bloc.add(DeleteOptionGroup(optionGroup));
                     },
+                    onDeleteOptionClick: (optionGroup, option) {
+                      bloc.add(DeleteOption(optionGroup, option));
+                    },
                   ),
                   const SizedBox(height: 16.0),
                   SizedBox(
