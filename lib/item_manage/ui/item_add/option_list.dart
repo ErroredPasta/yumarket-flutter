@@ -6,16 +6,22 @@ class OptionList extends StatelessWidget {
   final List<TempOption> _options;
   final void Function(TempOption option) onDeleteOptionClick;
 
-  const OptionList(this._options,
-      {required this.onDeleteOptionClick, super.key,});
+  const OptionList(
+    this._options, {
+    required this.onDeleteOptionClick,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (final option in _options) OptionListItem(
-          option, onDeleteOptionClick: onDeleteOptionClick,
-        )
+        for (final option in _options)
+          OptionListItem(
+            option,
+            onDeleteOptionClick: onDeleteOptionClick,
+            key: ObjectKey(option),
+          )
       ],
     );
   }
@@ -25,7 +31,8 @@ class OptionListItem extends StatelessWidget {
   final TempOption _option;
   final void Function(TempOption option) onDeleteOptionClick;
 
-  const OptionListItem(this._option, {
+  const OptionListItem(
+    this._option, {
     required this.onDeleteOptionClick,
     super.key,
   });
@@ -61,9 +68,11 @@ class OptionListItem extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8.0),
-          IconButton(onPressed: () {
-            onDeleteOptionClick(_option);
-          }, icon: const Icon(Icons.delete))
+          IconButton(
+              onPressed: () {
+                onDeleteOptionClick(_option);
+              },
+              icon: const Icon(Icons.delete))
         ],
       ),
     );

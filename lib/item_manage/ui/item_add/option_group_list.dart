@@ -27,6 +27,7 @@ class OptionGroupList extends StatelessWidget {
             onAddOptionClick: onAddOptionClick,
             onDeleteOptionGroupClick: onDeleteOptionGroupClick,
             onDeleteOptionClick: onDeleteOptionClick,
+            key: ObjectKey(optionGroup),
           )
       ],
     );
