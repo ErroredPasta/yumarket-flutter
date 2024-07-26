@@ -57,7 +57,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState> {
         List.from(state.data!.optionGroups)
           ..add(
             TempOptionGroup(
-              id: -(state.data!.optionGroups.length),
+              id: (state.data!.optionGroups.lastOrNull?.id ?? 0) + 1,
             ),
           );
 
@@ -83,7 +83,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState> {
   ) {
     event.optionGroup.options.add(
       TempOption(
-        id: -(event.optionGroup.options.length),
+        id: (event.optionGroup.options.lastOrNull?.id ?? 0) + 1,
       ),
     );
 
