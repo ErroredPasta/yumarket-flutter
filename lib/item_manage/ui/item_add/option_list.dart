@@ -45,6 +45,7 @@ class OptionListItem extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
+              initialValue: _option.name,
               onChanged: (value) {
                 _option.name = value;
               },
@@ -57,6 +58,7 @@ class OptionListItem extends StatelessWidget {
           const SizedBox(width: 8.0),
           Expanded(
             child: TextFormField(
+              initialValue: _option.additionalPrice.toString(),
               onChanged: (value) {
                 _option.additionalPrice = int.parse(value);
               },

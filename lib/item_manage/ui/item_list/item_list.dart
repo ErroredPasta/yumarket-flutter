@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/model/item.dart';
 
@@ -49,7 +50,10 @@ class ItemListItem extends StatelessWidget {
                 Text('₩${item.price}')
               ],
             ),
-          )
+          ),
+          IconButton(onPressed: () {
+            context.push('/items/update', extra: item);
+          }, icon: const Icon(Icons.edit))
         ],
       ),
     );

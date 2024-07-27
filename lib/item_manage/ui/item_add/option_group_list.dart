@@ -56,6 +56,7 @@ class OptionGroupListItem extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            initialValue: _optionGroup.name,
             onChanged: (value) {
               _optionGroup.name = value;
             },
@@ -69,6 +70,7 @@ class OptionGroupListItem extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
+                  initialValue: _optionGroup.selectRange.start.toString(),
                   onChanged: (value) {
                     _optionGroup.selectRange.start = int.parse(value);
                   },
@@ -83,6 +85,7 @@ class OptionGroupListItem extends StatelessWidget {
               const SizedBox(width: 8.0),
               Expanded(
                 child: TextFormField(
+                  initialValue: _optionGroup.selectRange.end.toString(),
                   onChanged: (value) {
                     _optionGroup.selectRange.end = int.parse(value);
                   },

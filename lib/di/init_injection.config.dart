@@ -17,9 +17,13 @@ import 'package:yumarket_flutter/item_manage/domain/repository/item_repository.d
 import 'package:yumarket_flutter/item_manage/domain/validator/item_validator.dart'
     as _i3;
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_bloc.dart'
-    as _i10;
+    as _i12;
 import 'package:yumarket_flutter/item_manage/ui/item_list/item_manage_bloc.dart'
     as _i9;
+import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_bloc.dart'
+    as _i10;
+import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_state.dart'
+    as _i11;
 import 'package:yumarket_flutter/order/data/repository/order_repository_impl.dart'
     as _i5;
 import 'package:yumarket_flutter/order/domain/repository/order_repository.dart'
@@ -43,7 +47,16 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i8.OrderBloc>(() => _i8.OrderBloc(gh<_i4.OrderRepository>()));
     gh.factory<_i9.ItemManageBloc>(
         () => _i9.ItemManageBloc(gh<_i6.ItemRepository>()));
-    gh.factory<_i10.ItemAddBloc>(() => _i10.ItemAddBloc(
+    gh.factoryParam<_i10.ItemUpdateBloc, _i11.ItemUpdateState, dynamic>((
+      itemUpdateState,
+      _,
+    ) =>
+        _i10.ItemUpdateBloc(
+          gh<_i6.ItemRepository>(),
+          gh<_i3.ItemValidator>(),
+          itemUpdateState,
+        ));
+    gh.factory<_i12.ItemAddBloc>(() => _i12.ItemAddBloc(
           gh<_i6.ItemRepository>(),
           gh<_i3.ItemValidator>(),
         ));

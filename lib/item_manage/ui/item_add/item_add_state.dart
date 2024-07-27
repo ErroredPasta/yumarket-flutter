@@ -8,24 +8,38 @@ class ItemAddState {
 
 class TempOptionGroup {
   int id;
-  String name = '';
+  String name;
   List<TempOption> options = [];
   TempSelectRange selectRange = TempSelectRange();
 
-  TempOptionGroup({required this.id});
+  TempOptionGroup({
+    required this.id,
+    this.name = '',
+    List<TempOption>? options,
+    TempSelectRange? selectRange,
+  }) {
+    if (options != null) this.options = options;
+    if (selectRange != null) this.selectRange = selectRange;
+  }
 }
 
 class TempOption {
   int id;
-  String name = '';
-  int additionalPrice = 0;
+  String name;
+  int additionalPrice;
 
-  TempOption({required this.id});
+  TempOption({
+    required this.id,
+    this.name = '',
+    this.additionalPrice = 0,
+  });
 }
 
 class TempSelectRange {
-  int start = 1;
-  int end = 1;
+  int start;
+  int end;
+
+  TempSelectRange({this.start = 1, this.end = 1});
 }
 
 List<OptionGroup> tempOptionGroupsToOptionGroups(
