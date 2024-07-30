@@ -8,6 +8,8 @@ import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_state.dart';
 
 import '../../domain/repository/item_repository.dart';
 import '../../domain/validator/item_validator.dart';
+import '../item_option/temp_option.dart';
+import '../item_option/temp_option_group.dart';
 
 @injectable
 class ItemAddBloc extends BaseBloc<ItemAddState> {

@@ -1,6 +1,8 @@
 import 'package:yumarket_flutter/core/ui/bloc/base_event.dart';
 import 'package:yumarket_flutter/item_manage/domain/model/item.dart';
-import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_state.dart';
+
+import '../item_option/temp_option.dart';
+import '../item_option/temp_option_group.dart';
 
 abstract class ItemAddEvent extends BaseEvent {
   const ItemAddEvent();

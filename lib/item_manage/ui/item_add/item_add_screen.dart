@@ -7,9 +7,10 @@ import 'package:yumarket_flutter/item_manage/domain/model/item.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_bloc.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_event.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_state.dart';
-import 'package:yumarket_flutter/item_manage/ui/item_add/option_group_list.dart';
+import 'package:yumarket_flutter/item_manage/ui/item_option/component/option_group_list.dart';
 
 import '../../../core/ui/bloc/base_event.dart';
+import '../item_option/conversion/option_group_conversions.dart';
 
 class ItemAddScreen extends StatefulWidget {
   const ItemAddScreen({super.key});
@@ -211,7 +212,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
       price: price,
       discountedPrice: discountedPrice,
       available: state.available,
-      optionGroups: tempOptionGroupsToOptionGroups(state.optionGroups)
+      optionGroups: convertTempOptionGroupsToOptionGroups(state.optionGroups)
     );
   }
 

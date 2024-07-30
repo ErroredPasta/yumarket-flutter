@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/src/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:yumarket_flutter/core/ui/bloc/base_bloc.dart';
@@ -9,7 +7,8 @@ import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_event.da
 import '../../../core/ui/bloc/ui_state.dart';
 import '../../domain/repository/item_repository.dart';
 import '../../domain/validator/item_validator.dart';
-import '../item_add/item_add_state.dart';
+import '../item_option/temp_option.dart';
+import '../item_option/temp_option_group.dart';
 import 'item_update_state.dart';
 
 @injectable

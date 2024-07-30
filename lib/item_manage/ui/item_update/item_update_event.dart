@@ -1,6 +1,7 @@
 import '../../../core/ui/bloc/base_event.dart';
 import '../../domain/model/item.dart';
-import '../item_add/item_add_state.dart';
+import '../item_option/temp_option.dart';
+import '../item_option/temp_option_group.dart';
 
 abstract class ItemUpdateEvent extends BaseEvent {
   const ItemUpdateEvent();

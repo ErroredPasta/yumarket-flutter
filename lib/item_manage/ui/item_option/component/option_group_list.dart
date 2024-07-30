@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_state.dart';
-import 'package:yumarket_flutter/item_manage/ui/item_add/option_list.dart';
+
+import '../temp_option.dart';
+import '../temp_option_group.dart';
+import 'option_list.dart';
+
 
 class OptionGroupList extends StatelessWidget {
   final List<TempOptionGroup> _optionGroups;

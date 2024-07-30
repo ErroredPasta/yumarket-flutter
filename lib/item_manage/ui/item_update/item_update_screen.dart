@@ -7,8 +7,8 @@ import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_state.da
 import '../../../core/ui/bloc/base_event.dart';
 import '../../../core/ui/bloc/ui_state.dart';
 import '../../domain/model/item.dart';
-import '../item_add/item_add_state.dart';
-import '../item_add/option_group_list.dart';
+import '../item_option/conversion/option_group_conversions.dart';
+import '../item_option/component/option_group_list.dart';
 import 'item_update_bloc.dart';
 import 'item_update_event.dart';
 
@@ -50,7 +50,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
     final ItemUpdateBloc bloc = GetIt.I.get(
       param1: ItemUpdateState(
         available: widget.item.available,
-        optionGroups: optionGroupToTempOptionGroup(
+        optionGroups: convertOptionGroupToTempOptionGroup(
           widget.item.optionGroups,
         ),
       ),
@@ -236,7 +236,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
         price: price,
         discountedPrice: discountedPrice,
         available: state.available,
-        optionGroups: tempOptionGroupsToOptionGroups(state.optionGroups));
+        optionGroups: convertTempOptionGroupsToOptionGroups(state.optionGroups));
   }
 
   @override
