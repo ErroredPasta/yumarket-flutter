@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:yumarket_flutter/core/ui/bloc/base_bloc.dart';
-import 'package:yumarket_flutter/core/ui/bloc/base_event.dart';
 import 'package:yumarket_flutter/core/ui/bloc/ui_state.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_event.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_state.dart';
@@ -12,7 +11,7 @@ import '../item_option/temp_option.dart';
 import '../item_option/temp_option_group.dart';
 
 @injectable
-class ItemAddBloc extends BaseBloc<ItemAddState> {
+class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
   final ItemRepository _repository;
   final ItemValidator _validator;
 
@@ -25,7 +24,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState> {
         ..optionGroups = state.data!.optionGroups
         ..available = !state.data!.available;
 
-      add(DataReceived(newState));
+      dataReceived(newState);
     });
 
     on<AddItem>(_addItem);
@@ -47,7 +46,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState> {
       _validator.validateItem(item);
       _repository.addItem(event.storeId, item);
     } on Exception catch (exception) {
-      add(ExceptionOccurred(exception));
+      exceptionOccurred(exception);
     }
   }
 
@@ -63,7 +62,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState> {
             ),
           );
 
-    add(DataReceived(ItemAddState()..optionGroups = newOptionGroups));
+    dataReceived(ItemAddState()..optionGroups = newOptionGroups);
   }
 
   void _deleteOptionGroup(
@@ -76,7 +75,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState> {
             (element) => element.id == event.optionGroup.id,
           );
 
-    add(DataReceived(ItemAddState()..optionGroups = newOptionGroups));
+    dataReceived(ItemAddState()..optionGroups = newOptionGroups);
   }
 
   void _addOption(
@@ -92,7 +91,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState> {
     final List<TempOptionGroup> newOptionGroups =
         List.from(state.data!.optionGroups);
 
-    add(DataReceived(ItemAddState()..optionGroups = newOptionGroups));
+    dataReceived(ItemAddState()..optionGroups = newOptionGroups);
   }
 
   void _deleteOption(
@@ -106,6 +105,6 @@ class ItemAddBloc extends BaseBloc<ItemAddState> {
     final List<TempOptionGroup> newOptionGroups =
         List.from(state.data!.optionGroups);
 
-    add(DataReceived(ItemAddState()..optionGroups = newOptionGroups));
+    dataReceived(ItemAddState()..optionGroups = newOptionGroups);
   }
 }

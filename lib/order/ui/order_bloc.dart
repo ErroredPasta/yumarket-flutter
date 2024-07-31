@@ -9,7 +9,7 @@ import '../domain/model/order.dart';
 import '../domain/model/order_state.dart';
 
 @injectable
-class OrderBloc extends BaseBloc<List<Order>> {
+class OrderBloc extends BaseBloc<List<Order>, OrderEvent> {
   final OrderRepository _repository;
 
   OrderBloc(this._repository) : super(const UiState(isLoading: true)) {
@@ -17,12 +17,12 @@ class OrderBloc extends BaseBloc<List<Order>> {
       (event, emit) => emit.onEach(
         _repository.getOrders(event.storeId),
         onData: (data) {
-          add(const LoadingDone());
-          add(DataReceived(data));
+          loadingDone();
+          dataReceived(data);
         },
         onError: (error, stackTrace) {
-          add(const LoadingDone());
-          add(ExceptionOccurred(error as Exception));
+          loadingDone();
+          exceptionOccurred(error as Exception);
         },
       ),
     );

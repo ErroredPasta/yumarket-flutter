@@ -12,7 +12,7 @@ import '../item_option/temp_option_group.dart';
 import 'item_update_state.dart';
 
 @injectable
-class ItemUpdateBloc extends BaseBloc<ItemUpdateState> {
+class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
   final ItemRepository _repository;
   final ItemValidator _validator;
 
@@ -27,7 +27,7 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState> {
         optionGroups: state.data!.optionGroups,
       );
 
-      add(DataReceived(newState));
+      dataReceived(newState);
     });
 
     on<UpdateItem>(_updateItem);
@@ -48,7 +48,7 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState> {
       _validator.validateItem(item);
       _repository.updateItem(storeId, item);
     } on Exception catch (exception) {
-      add(ExceptionOccurred(exception));
+      exceptionOccurred(exception);
     }
   }
 
@@ -64,10 +64,10 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState> {
             ),
           );
 
-    add(DataReceived(ItemUpdateState(
+    dataReceived(ItemUpdateState(
       available: state.data!.available,
       optionGroups: newOptionGroups,
-    )));
+    ));
   }
 
   void _deleteOptionGroup(
@@ -80,10 +80,10 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState> {
             (element) => element.id == event.optionGroup.id,
           );
 
-    add(DataReceived(ItemUpdateState(
+    dataReceived(ItemUpdateState(
       available: state.data!.available,
       optionGroups: newOptionGroups,
-    )));
+    ));
   }
 
   void _addOption(
@@ -99,10 +99,10 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState> {
     final List<TempOptionGroup> newOptionGroups =
         List.from(state.data!.optionGroups);
 
-    add(DataReceived(ItemUpdateState(
+    dataReceived(ItemUpdateState(
       available: state.data!.available,
       optionGroups: newOptionGroups,
-    )));
+    ));
   }
 
   void _deleteOption(
@@ -116,9 +116,9 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState> {
     final List<TempOptionGroup> newOptionGroups =
         List.from(state.data!.optionGroups);
 
-    add(DataReceived(ItemUpdateState(
+    dataReceived(ItemUpdateState(
       available: state.data!.available,
       optionGroups: newOptionGroups,
-    )));
+    ));
   }
 }

@@ -5,7 +5,6 @@ import 'package:yumarket_flutter/core/ui/bloc/ui_state.dart';
 import 'package:yumarket_flutter/core/ui/component/main_screen_bottom_navigation.dart';
 import 'package:yumarket_flutter/order/ui/order_bloc.dart';
 
-import '../../core/ui/bloc/base_event.dart';
 import '../domain/model/order.dart';
 import '../domain/model/order_state.dart';
 import 'order_event.dart';
@@ -19,7 +18,7 @@ class OrderScreen extends StatelessWidget {
     final bloc = GetIt.I.get<OrderBloc>();
     const storeId = 'cc898844-8f2f-451e-bccf-2e84cb195c46';
 
-    bloc.add(const GetOrders(storeId));
+    bloc.addEvent(const GetOrders(storeId));
 
     return DefaultTabController(
       length: OrderState.values.length,
@@ -47,7 +46,7 @@ class OrderScreen extends StatelessWidget {
               );
 
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              bloc.add(const ExceptionHandled());
+              bloc.exceptionHandled();
             }
           },
           builder: (context, state) {
@@ -63,11 +62,11 @@ class OrderScreen extends StatelessWidget {
                         .where((order) => order.orderState == orderState)
                         .toList(),
                     onAcceptClick: (order) =>
-                        bloc.add(AcceptOrder(storeId, order)),
+                        bloc.addEvent(AcceptOrder(storeId, order)),
                     onRejectClick: (order) =>
-                        bloc.add(RejectOrder(storeId, order)),
+                        bloc.addEvent(RejectOrder(storeId, order)),
                     onDeliveryDoneClick: (order) =>
-                        bloc.add(DoneOrder(storeId, order)),
+                        bloc.addEvent(DoneOrder(storeId, order)),
                   )
               ]);
             }

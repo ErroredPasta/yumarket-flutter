@@ -111,7 +111,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                           Checkbox(
                             value: available,
                             onChanged: (value) {
-                              bloc.add(const ItemUpdateToggleAvailable());
+                              bloc.addEvent(const ItemUpdateToggleAvailable());
                             },
                           ),
                           const Text('판매중')
@@ -119,7 +119,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                       ),
                     ),
                     onTap: () {
-                      bloc.add(const ItemUpdateToggleAvailable());
+                      bloc.addEvent(const ItemUpdateToggleAvailable());
                     },
                   ),
                   const SizedBox(height: 16.0),
@@ -134,13 +134,13 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                   OptionGroupList(
                     state.data!.optionGroups,
                     onAddOptionClick: (optionGroup) {
-                      bloc.add(ItemUpdateAddOption(optionGroup));
+                      bloc.addEvent(ItemUpdateAddOption(optionGroup));
                     },
                     onDeleteOptionGroupClick: (optionGroup) {
-                      bloc.add(ItemUpdateDeleteOptionGroup(optionGroup));
+                      bloc.addEvent(ItemUpdateDeleteOptionGroup(optionGroup));
                     },
                     onDeleteOptionClick: (optionGroup, option) {
-                      bloc.add(ItemUpdateDeleteOption(optionGroup, option));
+                      bloc.addEvent(ItemUpdateDeleteOption(optionGroup, option));
                     },
                   ),
                   const SizedBox(height: 16.0),
@@ -149,7 +149,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.add),
                       onPressed: () {
-                        bloc.add(const ItemUpdateAddOptionGroup());
+                        bloc.addEvent(const ItemUpdateAddOptionGroup());
                       },
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(
@@ -166,12 +166,12 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                     child: FilledButton(
                       onPressed: () {
                         try {
-                          bloc.add(
+                          bloc.addEvent(
                             UpdateItem(storeId, createItem(state.data!)),
                           );
                           context.pop();
                         } on Exception catch (exception) {
-                          bloc.add(ExceptionOccurred(exception));
+                          bloc.exceptionOccurred(exception);
                         }
                       },
                       style: FilledButton.styleFrom(
@@ -211,7 +211,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
               );
 
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              bloc.add(const ExceptionHandled());
+              bloc.exceptionHandled();
             }
           },
         ),

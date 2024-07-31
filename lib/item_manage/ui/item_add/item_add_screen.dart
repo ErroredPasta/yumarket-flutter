@@ -9,7 +9,6 @@ import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_event.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_state.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_option/component/option_group_list.dart';
 
-import '../../../core/ui/bloc/base_event.dart';
 import '../item_option/conversion/option_group_conversions.dart';
 
 class ItemAddScreen extends StatefulWidget {
@@ -89,7 +88,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                           Checkbox(
                             value: available,
                             onChanged: (value) {
-                              bloc.add(const ToggleAvailable());
+                              bloc.addEvent(const ToggleAvailable());
                             },
                           ),
                           const Text('판매중')
@@ -97,7 +96,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                       ),
                     ),
                     onTap: () {
-                      bloc.add(const ToggleAvailable());
+                      bloc.addEvent(const ToggleAvailable());
                     },
                   ),
                   const SizedBox(height: 16.0),
@@ -112,13 +111,13 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                   OptionGroupList(
                     state.data!.optionGroups,
                     onAddOptionClick: (optionGroup) {
-                      bloc.add(AddOption(optionGroup));
+                      bloc.addEvent(AddOption(optionGroup));
                     },
                     onDeleteOptionGroupClick: (optionGroup) {
-                      bloc.add(DeleteOptionGroup(optionGroup));
+                      bloc.addEvent(DeleteOptionGroup(optionGroup));
                     },
                     onDeleteOptionClick: (optionGroup, option) {
-                      bloc.add(DeleteOption(optionGroup, option));
+                      bloc.addEvent(DeleteOption(optionGroup, option));
                     },
                   ),
                   const SizedBox(height: 16.0),
@@ -127,7 +126,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.add),
                       onPressed: () {
-                        bloc.add(const AddOptionGroup());
+                        bloc.addEvent(const AddOptionGroup());
                       },
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(
@@ -144,10 +143,10 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                     child: FilledButton(
                       onPressed: () {
                         try {
-                          bloc.add(AddItem(storeId, createItem(state.data!)));
+                          bloc.addEvent(AddItem(storeId, createItem(state.data!)));
                           context.pop();
                         } on Exception catch (exception) {
-                          bloc.add(ExceptionOccurred(exception));
+                          bloc.exceptionOccurred(exception);
                         }
                       },
                       style: FilledButton.styleFrom(
@@ -187,7 +186,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
               );
 
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              bloc.add(const ExceptionHandled());
+              bloc.exceptionHandled();
             }
           },
         ),

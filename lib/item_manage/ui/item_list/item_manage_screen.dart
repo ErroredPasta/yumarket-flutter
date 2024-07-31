@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:yumarket_flutter/core/ui/component/main_screen_bottom_navigation.dart';
 import 'package:yumarket_flutter/item_manage/domain/model/item.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_list/item_list.dart';
-import '../../../core/ui/bloc/base_event.dart';
 import '../../../core/ui/bloc/ui_state.dart';
 import 'item_manage_bloc.dart';
 import 'item_manage_event.dart';
@@ -22,7 +21,7 @@ class ItemManageScreen extends StatelessWidget {
     const storeId = 'cc898844-8f2f-451e-bccf-2e84cb195c46';
     const availabilities = [available, notAvailable];
 
-    bloc.add(const GetItems(storeId));
+    bloc.addEvent(const GetItems(storeId));
 
     return DefaultTabController(
       length: availabilities.length,
@@ -47,7 +46,7 @@ class ItemManageScreen extends StatelessWidget {
               );
 
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              bloc.add(const ExceptionHandled());
+              bloc.exceptionHandled();
             }
           },
           builder: (context, state) {
