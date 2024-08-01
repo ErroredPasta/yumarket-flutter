@@ -80,6 +80,8 @@ flutter:
     - assets/market_manage_icon.png
     - assets/order_list_icon.png
     - assets/review_manage_icon.png
+    - assets/google.png
+    - assets/kakao.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

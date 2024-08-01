@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yumarket_flutter/auth/ui/login_screen.dart';
 import 'package:yumarket_flutter/di/init_injection.dart';
 import 'package:yumarket_flutter/firebase_options.dart';
 import 'package:yumarket_flutter/core/ui/theme/theme.dart';
@@ -37,7 +38,7 @@ class YuMarketApp extends StatelessWidget {
 }
 
 final _goRouter = GoRouter(
-  initialLocation: '/orders',
+  initialLocation: '/login',
   routes: [
     GoRoute(
       path: '/orders',
@@ -57,6 +58,10 @@ final _goRouter = GoRouter(
         final item = state.extra as Item;
         return ItemUpdateScreen(item);
       },
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginScreen(),
     )
   ],
 );
