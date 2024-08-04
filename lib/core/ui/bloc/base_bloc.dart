@@ -19,6 +19,12 @@ abstract class BaseBloc<Data, Event extends BaseEvent>
     );
   }
 
+  @Deprecated('use addEvent instead to add only events of parameterized types')
+  @override
+  void add(BaseEvent event) {
+    super.add(event);
+  }
+
   void addEvent(Event event) => _checkClosedAndAdd(event);
 
   void loading() => _checkClosedAndAdd(const Loading());
@@ -34,6 +40,6 @@ abstract class BaseBloc<Data, Event extends BaseEvent>
 
   void _checkClosedAndAdd(BaseEvent event) {
     if (isClosed) return;
-    add(event);
+    super.add(event);
   }
 }
