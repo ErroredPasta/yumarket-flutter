@@ -37,145 +37,8 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocConsumer<ItemAddBloc, UiState<ItemAddState>>(
+        child: BlocListener<ItemAddBloc, UiState<ItemAddState>>(
           bloc: bloc,
-          builder: (context, state) {
-            final bool available = state.data!.available;
-
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    controller: _itemNameController,
-                    decoration: const InputDecoration(
-                      labelText: '상품명',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: _originalPriceController,
-                    decoration: const InputDecoration(
-                      labelText: '상품 원가',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: _discountedPriceController,
-                    decoration: const InputDecoration(
-                      labelText: '상품 할인가',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: _stockController,
-                    decoration: const InputDecoration(
-                      labelText: '재고 수량',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Checkbox(
-                            value: available,
-                            onChanged: (value) {
-                              bloc.addEvent(const ToggleAvailable());
-                            },
-                          ),
-                          const Text('판매중')
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      bloc.addEvent(const ToggleAvailable());
-                    },
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: _descriptionController,
-                    decoration: const InputDecoration(
-                      labelText: '상품 설명',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  OptionGroupList(
-                    state.data!.optionGroups,
-                    onAddOptionClick: (optionGroup) {
-                      bloc.addEvent(AddOption(optionGroup));
-                    },
-                    onDeleteOptionGroupClick: (optionGroup) {
-                      bloc.addEvent(DeleteOptionGroup(optionGroup));
-                    },
-                    onDeleteOptionClick: (optionGroup, option) {
-                      bloc.addEvent(DeleteOption(optionGroup, option));
-                    },
-                  ),
-                  const SizedBox(height: 16.0),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      icon: const Icon(Icons.add),
-                      onPressed: () {
-                        bloc.addEvent(const AddOptionGroup());
-                      },
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(
-                            color: Theme.of(context).colorScheme.secondary),
-                        foregroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                      ),
-                      label: const Text('옵션 그룹 추가하기'),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () {
-                        try {
-                          bloc.addEvent(AddItem(storeId, createItem(state.data!)));
-                          context.pop();
-                        } on Exception catch (exception) {
-                          bloc.exceptionOccurred(exception);
-                        }
-                      },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onPrimary,
-                      ),
-                      child: const Text('추가'),
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: () {
-                        context.pop();
-                      },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onSurface,
-                      ),
-                      child: const Text('취소'),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
           listenWhen: (previous, current) =>
               previous.exception != current.exception,
           listener: (context, state) {
@@ -189,8 +52,160 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
               bloc.exceptionHandled();
             }
           },
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  controller: _itemNameController,
+                  decoration: const InputDecoration(
+                    labelText: '상품명',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: _originalPriceController,
+                  decoration: const InputDecoration(
+                    labelText: '상품 원가',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: _discountedPriceController,
+                  decoration: const InputDecoration(
+                    labelText: '상품 할인가',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: _stockController,
+                  decoration: const InputDecoration(
+                    labelText: '재고 수량',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                availableCheckBox(bloc),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(
+                    labelText: '상품 설명',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                optionGroupList(bloc),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      bloc.addEvent(const AddOptionGroup());
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                          color: Theme.of(context).colorScheme.secondary),
+                      foregroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
+                    label: const Text('옵션 그룹 추가하기'),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () {
+                      try {
+                        bloc.addEvent(
+                          AddItem(storeId, createItem(bloc.state.data!)),
+                        );
+                        context.pop();
+                      } on Exception catch (exception) {
+                        bloc.exceptionOccurred(exception);
+                      }
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                    child: const Text('추가'),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () {
+                      context.pop();
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      foregroundColor: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    child: const Text('취소'),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget availableCheckBox(ItemAddBloc bloc) {
+    return BlocBuilder<ItemAddBloc, UiState<ItemAddState>>(
+      bloc: bloc,
+      builder: (context, state) {
+        final available = state.data!.available;
+
+        return InkWell(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(
+                  value: available,
+                  onChanged: (value) {
+                    bloc.addEvent(const ToggleAvailable());
+                  },
+                ),
+                const Text('판매중')
+              ],
+            ),
+          ),
+          onTap: () {
+            bloc.addEvent(const ToggleAvailable());
+          },
+        );
+      },
+    );
+  }
+
+  Widget optionGroupList(ItemAddBloc bloc) {
+    return BlocBuilder<ItemAddBloc, UiState<ItemAddState>>(
+      bloc: bloc,
+      builder: (context, state) {
+        return OptionGroupList(
+          state.data!.optionGroups,
+          onAddOptionClick: (optionGroup) {
+            bloc.addEvent(AddOption(optionGroup));
+          },
+          onDeleteOptionGroupClick: (optionGroup) {
+            bloc.addEvent(DeleteOptionGroup(optionGroup));
+          },
+          onDeleteOptionClick: (optionGroup, option) {
+            bloc.addEvent(DeleteOption(optionGroup, option));
+          },
+        );
+      },
     );
   }
 
@@ -204,15 +219,15 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
     if (stock == null) throw Exception('알맞은 형식의 재고량을 입력해주세요.');
 
     return Item(
-      id: 0,
-      name: _itemNameController.text,
-      description: _descriptionController.text,
-      stock: stock,
-      price: price,
-      discountedPrice: discountedPrice,
-      available: state.available,
-      optionGroups: convertTempOptionGroupsToOptionGroups(state.optionGroups)
-    );
+        id: 0,
+        name: _itemNameController.text,
+        description: _descriptionController.text,
+        stock: stock,
+        price: price,
+        discountedPrice: discountedPrice,
+        available: state.available,
+        optionGroups:
+            convertTempOptionGroupsToOptionGroups(state.optionGroups));
   }
 
   @override
