@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_state.dart';
 
-import '../../../core/ui/bloc/base_event.dart';
 import '../../../core/ui/bloc/ui_state.dart';
 import '../../domain/model/item.dart';
 import '../item_option/conversion/option_group_conversions.dart';
@@ -60,12 +59,22 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocConsumer<ItemUpdateBloc, UiState<ItemUpdateState>>(
-          bloc: bloc,
-          builder: (context, state) {
-            final bool available = state.data!.available;
+        child: BlocListener<ItemUpdateBloc, UiState<ItemUpdateState>>(
+            bloc: bloc,
+            listenWhen: (previous, current) =>
+                previous.exception != current.exception,
+            listener: (context, state) {
+              if (state.exception != null) {
+                final snackBar = SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text(state.exception.toString()),
+                );
 
-            return SingleChildScrollView(
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                bloc.exceptionHandled();
+              }
+            },
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -101,27 +110,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Checkbox(
-                            value: available,
-                            onChanged: (value) {
-                              bloc.addEvent(const ItemUpdateToggleAvailable());
-                            },
-                          ),
-                          const Text('판매중')
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      bloc.addEvent(const ItemUpdateToggleAvailable());
-                    },
-                  ),
+                  availableCheckBox(bloc),
                   const SizedBox(height: 16.0),
                   TextFormField(
                     controller: _descriptionController,
@@ -131,18 +120,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  OptionGroupList(
-                    state.data!.optionGroups,
-                    onAddOptionClick: (optionGroup) {
-                      bloc.addEvent(ItemUpdateAddOption(optionGroup));
-                    },
-                    onDeleteOptionGroupClick: (optionGroup) {
-                      bloc.addEvent(ItemUpdateDeleteOptionGroup(optionGroup));
-                    },
-                    onDeleteOptionClick: (optionGroup, option) {
-                      bloc.addEvent(ItemUpdateDeleteOption(optionGroup, option));
-                    },
-                  ),
+                  optionGroupList(bloc),
                   const SizedBox(height: 16.0),
                   SizedBox(
                     width: double.infinity,
@@ -167,7 +145,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                       onPressed: () {
                         try {
                           bloc.addEvent(
-                            UpdateItem(storeId, createItem(state.data!)),
+                            UpdateItem(storeId, createItem(bloc.state.data!)),
                           );
                           context.pop();
                         } on Exception catch (exception) {
@@ -199,23 +177,57 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                   ),
                 ],
               ),
-            );
-          },
-          listenWhen: (previous, current) =>
-              previous.exception != current.exception,
-          listener: (context, state) {
-            if (state.exception != null) {
-              final snackBar = SnackBar(
-                behavior: SnackBarBehavior.floating,
-                content: Text(state.exception.toString()),
-              );
-
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              bloc.exceptionHandled();
-            }
-          },
-        ),
+            )),
       ),
+    );
+  }
+
+  Widget availableCheckBox(ItemUpdateBloc bloc) {
+    return BlocBuilder<ItemUpdateBloc, UiState<ItemUpdateState>>(
+      bloc: bloc,
+      builder: (context, state) {
+        return InkWell(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(
+                  value: state.data!.available,
+                  onChanged: (value) {
+                    bloc.addEvent(const ItemUpdateToggleAvailable());
+                  },
+                ),
+                const Text('판매중')
+              ],
+            ),
+          ),
+          onTap: () {
+            bloc.addEvent(const ItemUpdateToggleAvailable());
+          },
+        );
+      },
+    );
+  }
+
+  Widget optionGroupList(ItemUpdateBloc bloc) {
+    return BlocBuilder<ItemUpdateBloc, UiState<ItemUpdateState>>(
+      bloc: bloc,
+      builder: (context, state) {
+        return OptionGroupList(
+          state.data!.optionGroups,
+          onAddOptionClick: (optionGroup) {
+            bloc.addEvent(ItemUpdateAddOption(optionGroup));
+          },
+          onDeleteOptionGroupClick: (optionGroup) {
+            bloc.addEvent(ItemUpdateDeleteOptionGroup(optionGroup));
+          },
+          onDeleteOptionClick: (optionGroup, option) {
+            bloc.addEvent(ItemUpdateDeleteOption(optionGroup, option));
+          },
+        );
+      },
     );
   }
 
@@ -236,7 +248,8 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
         price: price,
         discountedPrice: discountedPrice,
         available: state.available,
-        optionGroups: convertTempOptionGroupsToOptionGroups(state.optionGroups));
+        optionGroups:
+            convertTempOptionGroupsToOptionGroups(state.optionGroups));
   }
 
   @override
