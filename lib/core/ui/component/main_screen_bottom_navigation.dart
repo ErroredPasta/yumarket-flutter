@@ -31,7 +31,7 @@ class MainScreenBottomNavigation extends StatelessWidget {
               scale: 1.5,
             ),
           ),
-          label: '채팅 관리',
+          label: '리뷰 관리',
         ),
         BottomNavigationBarItem(
           icon: Image.asset(
@@ -55,7 +55,7 @@ class MainScreenBottomNavigation extends StatelessWidget {
 
         switch(value) {
           case 0: context.push('/orders');
-          case 1: context.push('/chats');
+          case 1: context.push('/reviews');
           case 2: context.push('/items');
           case 3: context.push('/market-manage');
         }

@@ -7,12 +7,13 @@ import 'package:yumarket_flutter/firebase_options.dart';
 import 'package:yumarket_flutter/core/ui/theme/theme.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_screen.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_screen.dart';
+import 'package:yumarket_flutter/review/ui/review_screen.dart';
 
 import 'item_manage/domain/model/item.dart';
 import 'item_manage/ui/item_list/item_manage_screen.dart';
 import 'order/ui/order_screen.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -62,6 +63,10 @@ final _goRouter = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/reviews',
+      builder: (context, state) => const ReviewScreen(),
     )
   ],
 );
