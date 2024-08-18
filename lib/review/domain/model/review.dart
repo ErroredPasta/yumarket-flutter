@@ -3,6 +3,7 @@ import '../../../order/domain/model/order.dart';
 import 'reply.dart';
 
 part 'review.freezed.dart';
+
 part 'review.g.dart';
 
 @freezed
