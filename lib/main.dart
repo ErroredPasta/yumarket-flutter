@@ -14,6 +14,10 @@ import 'item_manage/ui/item_list/item_manage_screen.dart';
 import 'order/ui/order_screen.dart';
 
 void main() async {
+  //
+  // FIXME
+  // Do not run web app with flutter 3.24.0
+  //
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
