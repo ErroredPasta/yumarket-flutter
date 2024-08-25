@@ -6,8 +6,12 @@ import 'package:yumarket_flutter/item_manage/domain/repository/item_repository.d
 
 @Injectable(as: ItemRepository)
 class ItemRepositoryImpl implements ItemRepository {
+  final String storeId;
+
+  const ItemRepositoryImpl(@Named('storeId') this.storeId);
+
   @override
-  Stream<List<Item>> getItems(String storeId) {
+  Stream<List<Item>> getItems() {
     final ref = FirebaseDatabase.instance.ref('marketItems/$storeId');
 
     return ref.onValue.map(
@@ -26,7 +30,7 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
-  Future<void> addItem(String storeId, Item item) async {
+  Future<void> addItem(Item item) async {
     final ref = FirebaseDatabase.instance.ref('marketItems/$storeId');
     final items = await ref.get();
     final newItemId = ((items.value as List).last['id'] as int) + 1;
@@ -35,7 +39,7 @@ class ItemRepositoryImpl implements ItemRepository {
   }
 
   @override
-  Future<void> updateItem(String storeId, Item item) async {
+  Future<void> updateItem(Item item) async {
     final ref = FirebaseDatabase.instance.ref('marketItems/$storeId/${item.id}');
     await ref.update(item.toJson());
   }

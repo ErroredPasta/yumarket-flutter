@@ -12,10 +12,9 @@ class ItemUpdateToggleAvailable extends ItemUpdateEvent {
 }
 
 class UpdateItem extends ItemUpdateEvent {
-  final String storeId;
   final Item item;
 
-  const UpdateItem(this.storeId, this.item);
+  const UpdateItem(this.item);
 }
 
 class ItemUpdateAddOptionGroup extends ItemUpdateEvent {

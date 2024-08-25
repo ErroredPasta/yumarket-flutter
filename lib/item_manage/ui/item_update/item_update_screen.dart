@@ -54,7 +54,6 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
         ),
       ),
     );
-    const storeId = 'cc898844-8f2f-451e-bccf-2e84cb195c46';
 
     return Scaffold(
       body: Padding(
@@ -145,7 +144,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                       onPressed: () {
                         try {
                           bloc.addEvent(
-                            UpdateItem(storeId, createItem(bloc.state.data!)),
+                            UpdateItem(createItem(bloc.state.data!)),
                           );
                           context.pop();
                         } on Exception catch (exception) {

@@ -7,8 +7,12 @@ import '../../domain/model/order.dart';
 
 @Injectable(as: OrderRepository)
 class OrderRepositoryImpl implements OrderRepository {
+  final String storeId;
+
+  const OrderRepositoryImpl(@Named('storeId') this.storeId);
+
   @override
-  Stream<List<Order>> getOrders(String storeId) {
+  Stream<List<Order>> getOrders() {
     final ref = FirebaseDatabase.instance.ref('orders/$storeId');
 
     return ref.onValue.map(
@@ -27,7 +31,7 @@ class OrderRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<void> updateOrder(String storeId, Order order) async {
+  Future<void> updateOrder(Order order) async {
     final ref = FirebaseDatabase.instance.ref('orders/$storeId/${order.id}');
     await ref.update(order.toJson()..remove('orderItemDtos'));
   }

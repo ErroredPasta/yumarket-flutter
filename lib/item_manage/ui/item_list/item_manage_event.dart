@@ -5,8 +5,6 @@ abstract class ItemManageEvent extends BaseEvent {
 }
 
 class GetItems extends ItemManageEvent {
-  final String storeId;
-
-  const GetItems(this.storeId);
+  const GetItems();
 }
 

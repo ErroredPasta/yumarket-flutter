@@ -32,7 +32,6 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
   @override
   Widget build(BuildContext context) {
     final ItemAddBloc bloc = GetIt.I.get();
-    const storeId = 'cc898844-8f2f-451e-bccf-2e84cb195c46';
 
     return Scaffold(
       body: Padding(
@@ -122,7 +121,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                     onPressed: () {
                       try {
                         bloc.addEvent(
-                          AddItem(storeId, createItem(bloc.state.data!)),
+                          AddItem(createItem(bloc.state.data!)),
                         );
                         context.pop();
                       } on Exception catch (exception) {

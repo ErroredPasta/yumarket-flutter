@@ -16,7 +16,7 @@ class ReviewBloc extends BaseBloc<List<Review>, ReviewEvent> {
 
   void _getReviews(GetReviews event, Emitter<UiState<List<Review>>> emit) {
     emit.onEach(
-      _repository.getReviews(event.storeId),
+      _repository.getReviews(),
       onData: (data) {
         loadingDone();
         dataReceived(data);

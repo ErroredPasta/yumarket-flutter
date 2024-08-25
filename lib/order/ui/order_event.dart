@@ -1,4 +1,3 @@
-
 import '../../../core/ui/bloc/base_event.dart';
 import '../domain/model/order.dart';
 
@@ -7,29 +6,23 @@ abstract class OrderEvent extends BaseEvent {
 }
 
 class GetOrders extends OrderEvent {
-  final String storeId;
-
-  const GetOrders(this.storeId);
+  const GetOrders();
 }
 
 class AcceptOrder extends OrderEvent {
-  final String storeId;
   final Order order;
 
-
-  const AcceptOrder(this.storeId, this.order);
+  const AcceptOrder(this.order);
 }
 
 class RejectOrder extends OrderEvent {
-  final String storeId;
   final Order order;
 
-  const RejectOrder(this.storeId, this.order);
+  const RejectOrder(this.order);
 }
 
 class DoneOrder extends OrderEvent {
-  final String storeId;
   final Order order;
 
-  const DoneOrder(this.storeId, this.order);
+  const DoneOrder(this.order);
 }

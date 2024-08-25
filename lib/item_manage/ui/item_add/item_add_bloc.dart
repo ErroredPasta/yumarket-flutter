@@ -44,7 +44,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
 
     try {
       _validator.validateItem(item);
-      _repository.addItem(event.storeId, item);
+      _repository.addItem(item);
     } on Exception catch (exception) {
       exceptionOccurred(exception);
     }

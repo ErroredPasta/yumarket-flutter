@@ -6,8 +6,12 @@ import 'package:yumarket_flutter/review/domain/repository/review_repository.dart
 
 @Injectable(as: ReviewRepository)
 class ReviewRepositoryImpl implements ReviewRepository {
+  final String storeId;
+
+  const ReviewRepositoryImpl(@Named('storeId') this.storeId);
+
   @override
-  Stream<List<Review>> getReviews(String storeId) {
+  Stream<List<Review>> getReviews() {
     final ref = FirebaseDatabase.instance.ref('/reviews/$storeId');
     return ref.onValue.map(
       (event) {

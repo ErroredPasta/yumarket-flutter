@@ -5,7 +5,5 @@ abstract class ReviewEvent extends BaseEvent {
 }
 
 class GetReviews extends ReviewEvent {
-  final String storeId;
-
-  const GetReviews(this.storeId);
+  const GetReviews();
 }

@@ -14,7 +14,7 @@ class ItemManageBloc extends BaseBloc<List<Item>, ItemManageEvent> {
     on<GetItems>(
       (event, emit) {
         emit.onEach(
-          _repository.getItems(event.storeId),
+          _repository.getItems(),
           onData: (data) {
             loadingDone();
             dataReceived(data);

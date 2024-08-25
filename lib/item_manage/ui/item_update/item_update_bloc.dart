@@ -1,7 +1,6 @@
 import 'package:bloc/src/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:yumarket_flutter/core/ui/bloc/base_bloc.dart';
-import 'package:yumarket_flutter/core/ui/bloc/base_event.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_event.dart';
 
 import '../../../core/ui/bloc/ui_state.dart';
@@ -42,11 +41,9 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
   }
 
   void _updateItem(UpdateItem event, Emitter<UiState<ItemUpdateState>> emit) {
-    final UpdateItem(:storeId, :item) = event;
-
     try {
-      _validator.validateItem(item);
-      _repository.updateItem(storeId, item);
+      _validator.validateItem(event.item);
+      _repository.updateItem(event.item);
     } on Exception catch (exception) {
       exceptionOccurred(exception);
     }

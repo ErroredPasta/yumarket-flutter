@@ -18,10 +18,9 @@ class ItemManageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ItemManageBloc bloc = GetIt.I.get();
-    const storeId = 'cc898844-8f2f-451e-bccf-2e84cb195c46';
     const availabilities = [available, notAvailable];
 
-    bloc.addEvent(const GetItems(storeId));
+    bloc.addEvent(const GetItems());
 
     return DefaultTabController(
       length: availabilities.length,

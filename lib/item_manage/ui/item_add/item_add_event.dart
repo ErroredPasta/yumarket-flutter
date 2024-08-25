@@ -13,10 +13,9 @@ class ToggleAvailable extends ItemAddEvent {
 }
 
 class AddItem extends ItemAddEvent {
-  final String storeId;
   final Item item;
 
-  const AddItem(this.storeId, this.item);
+  const AddItem(this.item);
 }
 
 class AddOptionGroup extends ItemAddEvent {

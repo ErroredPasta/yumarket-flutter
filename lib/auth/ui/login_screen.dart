@@ -145,6 +145,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _navigateAfterLogin(User? user, BuildContext context) {
     if (user == null) return;
+    GetIt.I.registerFactory(
+      () => 'cc898844-8f2f-451e-bccf-2e84cb195c46',
+      instanceName: 'storeId',
+    );
     context.go('/orders');
   }
 }
