@@ -28,7 +28,7 @@ class ItemValidator {
         throw Exception('${optionGroup.name}의 선택 범위를 올바르게 입력해주세요.');
       }
 
-      if (optionGroup.selectRange.start > optionGroups.length) {
+      if (optionGroup.selectRange.start > optionGroup.options.length) {
         throw Exception('${optionGroup.name}의 옵션 갯수가 최소 선택보다 적습니다.');
       }
 
