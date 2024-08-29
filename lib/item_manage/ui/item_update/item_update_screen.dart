@@ -61,7 +61,8 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
         child: BlocListener<ItemUpdateBloc, UiState<ItemUpdateState>>(
             bloc: bloc,
             listenWhen: (previous, current) =>
-                previous.exception != current.exception,
+                previous.exception != current.exception ||
+                current.data?.updateDone == true,
             listener: (context, state) {
               if (state.exception != null) {
                 final snackBar = SnackBar(
@@ -71,6 +72,10 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
 
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 bloc.exceptionHandled();
+              }
+
+              if (state.data?.updateDone == true) {
+                context.pop();
               }
             },
             child: SingleChildScrollView(
@@ -142,14 +147,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                     width: double.infinity,
                     child: FilledButton(
                       onPressed: () {
-                        try {
-                          bloc.addEvent(
-                            UpdateItem(createItem(bloc.state.data!)),
-                          );
-                          context.pop();
-                        } on Exception catch (exception) {
-                          bloc.exceptionOccurred(exception);
-                        }
+                        bloc.addEvent(UpdateItem(createItem(bloc.state.data!)));
                       },
                       style: FilledButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,

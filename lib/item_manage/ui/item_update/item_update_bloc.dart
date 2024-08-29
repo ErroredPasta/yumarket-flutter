@@ -40,10 +40,16 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
     on<ItemUpdateDeleteOption>(_deleteOption);
   }
 
-  void _updateItem(UpdateItem event, Emitter<UiState<ItemUpdateState>> emit) {
+  void _updateItem(UpdateItem event, Emitter<UiState<ItemUpdateState>> emit) async {
     try {
       _validator.validateItem(event.item);
-      _repository.updateItem(event.item);
+      await _repository.updateItem(event.item);
+
+      dataReceived(ItemUpdateState(
+        available: state.data!.available,
+        optionGroups: state.data!.optionGroups,
+        updateDone: true
+      ));
     } on Exception catch (exception) {
       exceptionOccurred(exception);
     }
