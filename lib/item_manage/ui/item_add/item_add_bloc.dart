@@ -38,13 +38,18 @@ class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
     on<DeleteOption>(_deleteOption);
   }
 
-  void _addItem(AddItem event, Emitter<UiState<ItemAddState>> emit) {
-
+  void _addItem(AddItem event, Emitter<UiState<ItemAddState>> emit) async {
     final item = event.item;
 
     try {
       _validator.validateItem(item);
-      _repository.addItem(item);
+      await _repository.addItem(item);
+      dataReceived(
+        ItemAddState()
+          ..available = state.data!.available
+          ..optionGroups = state.data!.optionGroups
+          ..addDone = true,
+      );
     } on Exception catch (exception) {
       exceptionOccurred(exception);
     }

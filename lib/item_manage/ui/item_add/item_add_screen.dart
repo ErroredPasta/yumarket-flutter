@@ -39,7 +39,8 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
         child: BlocListener<ItemAddBloc, UiState<ItemAddState>>(
           bloc: bloc,
           listenWhen: (previous, current) =>
-              previous.exception != current.exception,
+              previous.exception != current.exception ||
+              current.data?.addDone == true,
           listener: (context, state) {
             if (state.exception != null) {
               final snackBar = SnackBar(
@@ -49,6 +50,10 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
 
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
               bloc.exceptionHandled();
+            }
+
+            if (state.data?.addDone == true) {
+              context.pop();
             }
           },
           child: SingleChildScrollView(
@@ -123,7 +128,6 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                         bloc.addEvent(
                           AddItem(createItem(bloc.state.data!)),
                         );
-                        context.pop();
                       } on Exception catch (exception) {
                         bloc.exceptionOccurred(exception);
                       }
