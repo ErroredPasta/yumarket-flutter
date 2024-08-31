@@ -147,7 +147,13 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                     width: double.infinity,
                     child: FilledButton(
                       onPressed: () {
-                        bloc.addEvent(UpdateItem(createItem(bloc.state.data!)));
+                        try {
+                          bloc.addEvent(
+                            UpdateItem(createItem(bloc.state.data!)),
+                          );
+                        } on Exception catch (exception) {
+                          bloc.exceptionOccurred(exception);
+                        }
                       },
                       style: FilledButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
