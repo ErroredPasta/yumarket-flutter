@@ -57,7 +57,7 @@ class MainScreenBottomNavigation extends StatelessWidget {
           case 0: context.push('/orders');
           case 1: context.push('/reviews');
           case 2: context.push('/items');
-          case 3: context.push('/market-manage');
+          case 3: context.push('/manage');
         }
       },
       selectedItemColor: primaryColor,

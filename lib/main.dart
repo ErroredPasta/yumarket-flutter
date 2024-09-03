@@ -7,6 +7,7 @@ import 'package:yumarket_flutter/firebase_options.dart';
 import 'package:yumarket_flutter/core/ui/theme/theme.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_screen.dart';
 import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_screen.dart';
+import 'package:yumarket_flutter/market_manage/ui/market_manage_screen.dart';
 import 'package:yumarket_flutter/review/ui/review_screen.dart';
 
 import 'item_manage/domain/model/item.dart';
@@ -71,6 +72,10 @@ final _goRouter = GoRouter(
     GoRoute(
       path: '/reviews',
       builder: (context, state) => const ReviewScreen(),
+    ),
+    GoRoute(
+      path: '/manage',
+      builder: (context, state) => const MarketManageScreen(),
     )
   ],
 );
