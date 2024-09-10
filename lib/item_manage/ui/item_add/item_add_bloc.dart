@@ -21,8 +21,8 @@ class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
   ) : super(UiState(data: ItemAddState())) {
     on<ToggleAvailable>((event, emit) {
       final newState = ItemAddState()
-        ..optionGroups = state.data!.optionGroups
-        ..available = !state.data!.available;
+        ..optionGroups = state.data.optionGroups
+        ..available = !state.data.available;
 
       dataReceived(newState);
     });
@@ -46,8 +46,8 @@ class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
       await _repository.addItem(item);
       dataReceived(
         ItemAddState()
-          ..available = state.data!.available
-          ..optionGroups = state.data!.optionGroups
+          ..available = state.data.available
+          ..optionGroups = state.data.optionGroups
           ..addDone = true,
       );
     } on Exception catch (exception) {
@@ -60,10 +60,10 @@ class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
     Emitter<UiState<ItemAddState>> emit,
   ) {
     final List<TempOptionGroup> newOptionGroups =
-        List.from(state.data!.optionGroups)
+        List.from(state.data.optionGroups)
           ..add(
             TempOptionGroup(
-              id: (state.data!.optionGroups.lastOrNull?.id ?? 0) + 1,
+              id: (state.data.optionGroups.lastOrNull?.id ?? 0) + 1,
             ),
           );
 
@@ -75,7 +75,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
     Emitter<UiState<ItemAddState>> emit,
   ) {
     final List<TempOptionGroup> newOptionGroups =
-        List.from(state.data!.optionGroups)
+        List.from(state.data.optionGroups)
           ..removeWhere(
             (element) => element.id == event.optionGroup.id,
           );
@@ -94,7 +94,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
     );
 
     final List<TempOptionGroup> newOptionGroups =
-        List.from(state.data!.optionGroups);
+        List.from(state.data.optionGroups);
 
     dataReceived(ItemAddState()..optionGroups = newOptionGroups);
   }
@@ -108,7 +108,7 @@ class ItemAddBloc extends BaseBloc<ItemAddState, ItemAddEvent> {
     );
 
     final List<TempOptionGroup> newOptionGroups =
-        List.from(state.data!.optionGroups);
+        List.from(state.data.optionGroups);
 
     dataReceived(ItemAddState()..optionGroups = newOptionGroups);
   }

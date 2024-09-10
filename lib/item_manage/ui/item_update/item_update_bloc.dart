@@ -22,8 +22,8 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
   ) : super(UiState(data: itemUpdateState)) {
     on<ItemUpdateToggleAvailable>((event, emit) {
       final newState = ItemUpdateState(
-        available: !state.data!.available,
-        optionGroups: state.data!.optionGroups,
+        available: !state.data.available,
+        optionGroups: state.data.optionGroups,
       );
 
       dataReceived(newState);
@@ -46,8 +46,8 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
       await _repository.updateItem(event.item);
 
       dataReceived(ItemUpdateState(
-        available: state.data!.available,
-        optionGroups: state.data!.optionGroups,
+        available: state.data.available,
+        optionGroups: state.data.optionGroups,
         updateDone: true
       ));
     } on Exception catch (exception) {
@@ -60,15 +60,15 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
     Emitter<UiState<ItemUpdateState>> emit,
   ) {
     final List<TempOptionGroup> newOptionGroups =
-        List.from(state.data!.optionGroups)
+        List.from(state.data.optionGroups)
           ..add(
             TempOptionGroup(
-              id: (state.data!.optionGroups.lastOrNull?.id ?? 0) + 1,
+              id: (state.data.optionGroups.lastOrNull?.id ?? 0) + 1,
             ),
           );
 
     dataReceived(ItemUpdateState(
-      available: state.data!.available,
+      available: state.data.available,
       optionGroups: newOptionGroups,
     ));
   }
@@ -78,13 +78,13 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
     Emitter<UiState<ItemUpdateState>> emit,
   ) {
     final List<TempOptionGroup> newOptionGroups =
-        List.from(state.data!.optionGroups)
+        List.from(state.data.optionGroups)
           ..removeWhere(
             (element) => element.id == event.optionGroup.id,
           );
 
     dataReceived(ItemUpdateState(
-      available: state.data!.available,
+      available: state.data.available,
       optionGroups: newOptionGroups,
     ));
   }
@@ -100,10 +100,10 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
     );
 
     final List<TempOptionGroup> newOptionGroups =
-        List.from(state.data!.optionGroups);
+        List.from(state.data.optionGroups);
 
     dataReceived(ItemUpdateState(
-      available: state.data!.available,
+      available: state.data.available,
       optionGroups: newOptionGroups,
     ));
   }
@@ -117,10 +117,10 @@ class ItemUpdateBloc extends BaseBloc<ItemUpdateState, ItemUpdateEvent> {
     );
 
     final List<TempOptionGroup> newOptionGroups =
-        List.from(state.data!.optionGroups);
+        List.from(state.data.optionGroups);
 
     dataReceived(ItemUpdateState(
-      available: state.data!.available,
+      available: state.data.available,
       optionGroups: newOptionGroups,
     ));
   }

@@ -10,7 +10,9 @@ import 'package:yumarket_flutter/review/ui/review_event.dart';
 class ReviewBloc extends BaseBloc<List<Review>, ReviewEvent> {
   final ReviewRepository _repository;
 
-  ReviewBloc(this._repository) : super(const UiState()) {
+  ReviewBloc(
+    this._repository,
+  ) : super(const UiState(isLoading: true, data: [])) {
     on<GetReviews>(_getReviews);
   }
 

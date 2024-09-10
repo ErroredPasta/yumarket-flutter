@@ -40,7 +40,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
           bloc: bloc,
           listenWhen: (previous, current) =>
               previous.exception != current.exception ||
-              current.data?.addDone == true,
+              current.data.addDone == true,
           listener: (context, state) {
             if (state.exception != null) {
               final snackBar = SnackBar(
@@ -52,7 +52,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
               bloc.exceptionHandled();
             }
 
-            if (state.data?.addDone == true) {
+            if (state.data.addDone == true) {
               context.pop();
             }
           },
@@ -126,7 +126,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
                     onPressed: () {
                       try {
                         bloc.addEvent(
-                          AddItem(createItem(bloc.state.data!)),
+                          AddItem(createItem(bloc.state.data)),
                         );
                       } on Exception catch (exception) {
                         bloc.exceptionOccurred(exception);
@@ -165,7 +165,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
     return BlocBuilder<ItemAddBloc, UiState<ItemAddState>>(
       bloc: bloc,
       builder: (context, state) {
-        final available = state.data!.available;
+        final available = state.data.available;
 
         return InkWell(
           child: Padding(
@@ -197,7 +197,7 @@ class _ItemAddScreenState extends State<ItemAddScreen> {
       bloc: bloc,
       builder: (context, state) {
         return OptionGroupList(
-          state.data!.optionGroups,
+          state.data.optionGroups,
           onAddOptionClick: (optionGroup) {
             bloc.addEvent(AddOption(optionGroup));
           },

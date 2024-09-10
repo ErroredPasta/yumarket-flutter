@@ -53,22 +53,18 @@ class OrderScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state.data != null) {
-              return TabBarView(children: [
-                for (final orderState in OrderState.values)
-                  OrderList(
-                    state.data!
-                        .where((order) => order.orderState == orderState)
-                        .toList(),
-                    onAcceptClick: (order) => bloc.addEvent(AcceptOrder(order)),
-                    onRejectClick: (order) => bloc.addEvent(RejectOrder(order)),
-                    onDeliveryDoneClick: (order) =>
-                        bloc.addEvent(DoneOrder(order)),
-                  )
-              ]);
-            }
-
-            return const Text('Nothing to show here');
+            return TabBarView(children: [
+              for (final orderState in OrderState.values)
+                OrderList(
+                  state.data
+                      .where((order) => order.orderState == orderState)
+                      .toList(),
+                  onAcceptClick: (order) => bloc.addEvent(AcceptOrder(order)),
+                  onRejectClick: (order) => bloc.addEvent(RejectOrder(order)),
+                  onDeliveryDoneClick: (order) =>
+                      bloc.addEvent(DoneOrder(order)),
+                )
+            ]);
           },
         ),
       ),

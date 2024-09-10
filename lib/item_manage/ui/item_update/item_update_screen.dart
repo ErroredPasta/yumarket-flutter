@@ -62,7 +62,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
             bloc: bloc,
             listenWhen: (previous, current) =>
                 previous.exception != current.exception ||
-                current.data?.updateDone == true,
+                current.data.updateDone == true,
             listener: (context, state) {
               if (state.exception != null) {
                 final snackBar = SnackBar(
@@ -74,7 +74,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                 bloc.exceptionHandled();
               }
 
-              if (state.data?.updateDone == true) {
+              if (state.data.updateDone == true) {
                 context.pop();
               }
             },
@@ -149,7 +149,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
                       onPressed: () {
                         try {
                           bloc.addEvent(
-                            UpdateItem(createItem(bloc.state.data!)),
+                            UpdateItem(createItem(bloc.state.data)),
                           );
                         } on Exception catch (exception) {
                           bloc.exceptionOccurred(exception);
@@ -197,7 +197,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Checkbox(
-                  value: state.data!.available,
+                  value: state.data.available,
                   onChanged: (value) {
                     bloc.addEvent(const ItemUpdateToggleAvailable());
                   },
@@ -219,7 +219,7 @@ class _ItemUpdateScreenState extends State<ItemUpdateScreen> {
       bloc: bloc,
       builder: (context, state) {
         return OptionGroupList(
-          state.data!.optionGroups,
+          state.data.optionGroups,
           onAddOptionClick: (optionGroup) {
             bloc.addEvent(ItemUpdateAddOption(optionGroup));
           },

@@ -40,11 +40,7 @@ class ReviewScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state.data != null) {
-            return ReviewList(state.data!);
-          }
-
-          return const Center(child: Text('Nothing to show here'));
+          return ReviewList(state.data);
         },
       ),
     );

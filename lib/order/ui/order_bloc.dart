@@ -11,7 +11,9 @@ import '../domain/model/order_state.dart';
 class OrderBloc extends BaseBloc<List<Order>, OrderEvent> {
   final OrderRepository _repository;
 
-  OrderBloc(this._repository) : super(const UiState(isLoading: true)) {
+  OrderBloc(
+    this._repository,
+  ) : super(const UiState(isLoading: true, data: [])) {
     on<GetOrders>(
       (event, emit) => emit.onEach(
         _repository.getOrders(),

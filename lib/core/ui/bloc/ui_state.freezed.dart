@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UiState<T> {
   bool get isLoading => throw _privateConstructorUsedError;
-  T? get data => throw _privateConstructorUsedError;
+  T get data => throw _privateConstructorUsedError;
   Exception? get exception => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +30,7 @@ abstract class $UiStateCopyWith<T, $Res> {
   factory $UiStateCopyWith(UiState<T> value, $Res Function(UiState<T>) then) =
       _$UiStateCopyWithImpl<T, $Res, UiState<T>>;
   @useResult
-  $Res call({bool isLoading, T? data, Exception? exception});
+  $Res call({bool isLoading, T data, Exception? exception});
 }
 
 /// @nodoc
@@ -58,7 +58,7 @@ class _$UiStateCopyWithImpl<T, $Res, $Val extends UiState<T>>
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as T?,
+              as T,
       exception: freezed == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -75,7 +75,7 @@ abstract class _$$UiStateImplCopyWith<T, $Res>
       __$$UiStateImplCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call({bool isLoading, T? data, Exception? exception});
+  $Res call({bool isLoading, T data, Exception? exception});
 }
 
 /// @nodoc
@@ -101,7 +101,7 @@ class __$$UiStateImplCopyWithImpl<T, $Res>
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as T?,
+              as T,
       exception: freezed == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
@@ -114,14 +114,13 @@ class __$$UiStateImplCopyWithImpl<T, $Res>
 
 class _$UiStateImpl<T> implements _UiState<T> {
   const _$UiStateImpl(
-      {this.isLoading = false, this.data = null, this.exception = null});
+      {this.isLoading = false, required this.data, this.exception = null});
 
   @override
   @JsonKey()
   final bool isLoading;
   @override
-  @JsonKey()
-  final T? data;
+  final T data;
   @override
   @JsonKey()
   final Exception? exception;
@@ -157,13 +156,13 @@ class _$UiStateImpl<T> implements _UiState<T> {
 abstract class _UiState<T> implements UiState<T> {
   const factory _UiState(
       {final bool isLoading,
-      final T? data,
+      required final T data,
       final Exception? exception}) = _$UiStateImpl<T>;
 
   @override
   bool get isLoading;
   @override
-  T? get data;
+  T get data;
   @override
   Exception? get exception;
   @override

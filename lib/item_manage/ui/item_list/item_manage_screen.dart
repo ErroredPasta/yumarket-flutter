@@ -53,19 +53,15 @@ class ItemManageScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state.data != null) {
-              return TabBarView(children: [
-                for (final availability in availabilities)
-                  ItemList(
-                    state.data!
-                        .where((item) =>
-                            item.available == (availability == available))
-                        .toList(),
-                  )
-              ]);
-            }
-
-            return const Center(child: Text('Nothing to show here'));
+            return TabBarView(children: [
+              for (final availability in availabilities)
+                ItemList(
+                  state.data
+                      .where((item) =>
+                          item.available == (availability == available))
+                      .toList(),
+                )
+            ]);
           },
         ),
         floatingActionButton: FloatingActionButton(

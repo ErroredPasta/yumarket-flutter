@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final LoginBloc bloc = GetIt.I.get();
 
-    return BlocListener<LoginBloc, UiState<String>>(
+    return BlocListener<LoginBloc, UiState<String?>>(
       bloc: bloc,
       listener: (context, state) {
         final storeId = state.data;

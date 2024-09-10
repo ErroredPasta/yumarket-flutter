@@ -6,7 +6,7 @@ part 'ui_state.freezed.dart';
 class UiState<T> with _$UiState<T> {
   const factory UiState({
     @Default(false) bool isLoading,
-    @Default(null) T? data,
+    required T data,
     @Default(null) Exception? exception,
   }) = _UiState;
 }

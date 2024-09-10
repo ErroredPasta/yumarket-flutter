@@ -10,7 +10,9 @@ import 'item_manage_event.dart';
 class ItemManageBloc extends BaseBloc<List<Item>, ItemManageEvent> {
   final ItemRepository _repository;
 
-  ItemManageBloc(this._repository) : super(const UiState(isLoading: true)) {
+  ItemManageBloc(
+    this._repository,
+  ) : super(const UiState(isLoading: true, data: [])) {
     on<GetItems>(
       (event, emit) {
         emit.onEach(
