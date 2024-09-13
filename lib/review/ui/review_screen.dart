@@ -19,6 +19,7 @@ class ReviewScreen extends StatelessWidget {
     bloc.addEvent(const GetReviews());
 
     return Scaffold(
+      appBar: AppBar(title: const Text('리뷰 관리'),),
       bottomNavigationBar: const MainScreenBottomNavigation(currentIndex: 1,),
       body: BlocConsumer<ReviewBloc, UiState<List<Review>>>(
         bloc: bloc,
