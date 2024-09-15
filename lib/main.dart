@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -78,4 +79,11 @@ final _goRouter = GoRouter(
       builder: (context, state) => const MarketManageScreen(),
     )
   ],
+  redirect: (context, state) {
+    if (FirebaseAuth.instance.currentUser == null || state.uri.path == '/') {
+      return '/login';
+    }
+
+    return null;
+  },
 );
