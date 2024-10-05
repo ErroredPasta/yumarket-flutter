@@ -24,6 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final LoginBloc bloc = GetIt.I.get();
 
+    bloc.addEvent(const TryAutoSignIn());
+
     return BlocListener<LoginBloc, UiState<LoginUiState>>(
       bloc: bloc,
       listener: (context, state) {

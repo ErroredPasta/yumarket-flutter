@@ -20,6 +20,7 @@ class LoginBloc extends BaseBloc<LoginUiState, LoginEvent> {
     on<SignIn>(_signIn);
     on<ToggleAutoSignIn>(_toggleAutoSignIn);
     on<SaveStoreId>(_saveStoreId);
+    on<TryAutoSignIn>(_trySignIn);
   }
 
   void _signIn(SignIn event, Emitter<UiState<LoginUiState>> emit) async {
@@ -41,5 +42,18 @@ class LoginBloc extends BaseBloc<LoginUiState, LoginEvent> {
     Emitter<UiState<LoginUiState>> emit,
   ) {
     _preference.saveStoreId(event.storeId);
+  }
+
+  void _trySignIn(
+    TryAutoSignIn event,
+    Emitter<UiState<LoginUiState>> emit,
+  ) async {
+    final isAutoSignInEnabled = await _preference.isAutoSignInEnabled;
+
+    if (!isAutoSignInEnabled) return;
+
+    final savedStoreId = await _preference.savedStoreId;
+
+    dataReceived(state.data.copyWith(storeId: savedStoreId));
   }
 }

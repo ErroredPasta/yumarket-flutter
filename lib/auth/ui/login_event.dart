@@ -20,3 +20,7 @@ class SaveStoreId extends LoginEvent {
 
   const SaveStoreId(this.storeId);
 }
+
+class TryAutoSignIn extends LoginEvent {
+  const TryAutoSignIn();
+}
