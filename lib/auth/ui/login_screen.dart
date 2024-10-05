@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yumarket_flutter/auth/ui/component/auto_sign_in_checkbox.dart';
 import 'package:yumarket_flutter/auth/ui/login_bloc.dart';
+import 'package:yumarket_flutter/auth/ui/login_ui_state.dart';
 
 import '../../core/ui/bloc/ui_state.dart';
 import 'login_event.dart';
@@ -23,12 +24,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final LoginBloc bloc = GetIt.I.get();
 
-    return BlocListener<LoginBloc, UiState<String?>>(
+    return BlocListener<LoginBloc, UiState<LoginUiState>>(
       bloc: bloc,
       listener: (context, state) {
-        final storeId = state.data;
+        final storeId = state.data.storeId;
 
         if (storeId == null) return;
+
+        final isAutoSignInChecked = state.data.isAutoSignInChecked;
+
+        if (isAutoSignInChecked) bloc.addEvent(SaveStoreId(storeId));
 
         GetIt.I.registerFactory(() => storeId, instanceName: 'storeId');
         context.go('/orders');
@@ -62,6 +67,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   border: OutlineInputBorder(),
                 ),
                 obscureText: true,
+              ),
+              const SizedBox(height: 24.0),
+              BlocBuilder<LoginBloc, UiState<LoginUiState>>(
+                bloc: bloc,
+                builder: (context, state) {
+                  return AutoSignInCheckbox(
+                    isChecked: state.data.isAutoSignInChecked,
+                    onClick: () {
+                      bloc.addEvent(const ToggleAutoSignIn());
+                    },
+                  );
+                },
               ),
               const SizedBox(height: 24.0),
               SizedBox(

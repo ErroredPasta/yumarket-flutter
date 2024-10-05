@@ -10,3 +10,13 @@ class SignIn extends LoginEvent {
 
   const SignIn (this.email, this.password);
 }
+
+class ToggleAutoSignIn extends LoginEvent {
+  const ToggleAutoSignIn();
+}
+
+class SaveStoreId extends LoginEvent {
+  final String storeId;
+
+  const SaveStoreId(this.storeId);
+}
