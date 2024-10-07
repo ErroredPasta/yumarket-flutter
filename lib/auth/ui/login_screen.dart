@@ -3,6 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yumarket_flutter/auth/ui/component/auto_sign_in_checkbox.dart';
+import 'package:yumarket_flutter/auth/ui/component/email_text_field.dart';
+import 'package:yumarket_flutter/auth/ui/component/find_password_button.dart';
+import 'package:yumarket_flutter/auth/ui/component/sign_in_button.dart';
+import 'package:yumarket_flutter/auth/ui/component/password_text_field.dart';
+import 'package:yumarket_flutter/auth/ui/component/sign_up_button.dart';
 import 'package:yumarket_flutter/auth/ui/login_bloc.dart';
 import 'package:yumarket_flutter/auth/ui/login_ui_state.dart';
 
@@ -54,22 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 24.0),
-              TextFormField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  labelText: '이메일',
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              EmailTextField(controller: emailController),
               const SizedBox(height: 24.0),
-              TextFormField(
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  labelText: '비밀번호',
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-              ),
+              PasswordTextField(controller: passwordController),
               const SizedBox(height: 24.0),
               BlocBuilder<LoginBloc, UiState<LoginUiState>>(
                 bloc: bloc,
@@ -85,45 +77,24 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 24.0),
               SizedBox(
                 width: double.infinity,
-                child: FilledButton(
-                  onPressed: () {
-                    bloc.addEvent(
-                      SignIn(emailController.text, passwordController.text),
-                    );
-                  },
-                  child: const Text('로그인'),
+                child: SignInButton(
+                  onClick: () => bloc.addEvent(
+                    SignIn(emailController.text, passwordController.text),
+                  ),
                 ),
               ),
               const SizedBox(height: 24.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        '회원가입',
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ),
+                  Expanded(child: SignUpButton(onClick: () {})),
                   Container(
                     width: 2,
                     height: 70,
                     color: Colors.grey,
                   ),
                   Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        '비밀번호 찾기',
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
+                    child: FindPasswordButton(onClick: () {}),
                   ),
                 ],
               ),
