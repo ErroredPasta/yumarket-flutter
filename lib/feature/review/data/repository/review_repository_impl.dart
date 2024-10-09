@@ -1,0 +1,31 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:injectable/injectable.dart';
+import 'package:yumarket_flutter/core/data/util/realtime_database_converter.dart';
+
+import '../../domain/model/review.dart';
+import '../../domain/repository/review_repository.dart';
+
+@Injectable(as: ReviewRepository)
+class ReviewRepositoryImpl implements ReviewRepository {
+  final String storeId;
+
+  const ReviewRepositoryImpl(@Named('storeId') this.storeId);
+
+  @override
+  Stream<List<Review>> getReviews() {
+    final ref = FirebaseDatabase.instance.ref('/reviews/$storeId');
+    return ref.onValue.map(
+      (event) {
+        if (event.snapshot.value == null) {
+          throw Exception('Store does not exists');
+        }
+
+        final value = event.snapshot.value as List;
+
+        return value
+            .map((review) => Review.fromJson(rtdbDataToJson(review)))
+            .toList();
+      },
+    );
+  }
+}

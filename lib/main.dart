@@ -2,18 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yumarket_flutter/auth/ui/login_screen.dart';
 import 'package:yumarket_flutter/di/init_injection.dart';
 import 'package:yumarket_flutter/firebase_options.dart';
 import 'package:yumarket_flutter/core/ui/theme/theme.dart';
-import 'package:yumarket_flutter/item_manage/ui/item_add/item_add_screen.dart';
-import 'package:yumarket_flutter/item_manage/ui/item_update/item_update_screen.dart';
-import 'package:yumarket_flutter/market_manage/ui/market_manage_screen.dart';
-import 'package:yumarket_flutter/review/ui/review_screen.dart';
 
-import 'item_manage/domain/model/item.dart';
-import 'item_manage/ui/item_list/item_manage_screen.dart';
-import 'order/ui/order_screen.dart';
+import 'feature/auth/ui/login_screen.dart';
+import 'feature/item_manage/domain/model/item.dart';
+import 'feature/item_manage/ui/item_add/item_add_screen.dart';
+import 'feature/item_manage/ui/item_list/item_manage_screen.dart';
+import 'feature/item_manage/ui/item_update/item_update_screen.dart';
+import 'feature/market_manage/ui/market_manage_screen.dart';
+import 'feature/order/ui/order_screen.dart';
+import 'feature/review/ui/review_screen.dart';
+
 
 void main() async {
   //
